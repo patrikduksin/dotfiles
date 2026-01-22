@@ -13,11 +13,6 @@ starship init fish | source
 set -gx BUN_INSTALL $HOME/.bun
 set -gx PATH $BUN_INSTALL/bin $PATH
 
-# Android SDK
-set -gx ANDROID_HOME $HOME/Library/Android/sdk
-set -gx PATH $PATH $ANDROID_HOME/emulator
-set -gx PATH $PATH $ANDROID_HOME/platform-tools
-
 # mise (version manager)
 mise activate fish | source
 
