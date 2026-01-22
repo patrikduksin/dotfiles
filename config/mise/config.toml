@@ -1,6 +1,5 @@
 [tools]
 bun = "latest"
-java = "lts"
 node = "latest"
 "npm:prettier" = "latest"
 pnpm = "latest"
