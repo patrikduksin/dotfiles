@@ -48,6 +48,7 @@
       "fastlane"
       "watchman"
       "mas"
+      "gh"
     ];
 
     # GUI applications
