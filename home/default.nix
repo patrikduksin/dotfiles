@@ -22,6 +22,9 @@
     "ghostty/config".source = ../config/ghostty/config;
   };
 
+  # Claude Code global settings
+  home.file.".claude/settings.json".source = ../config/claude/settings.json;
+
   # Git configuration
   programs.git = {
     enable = true;
