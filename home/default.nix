@@ -19,6 +19,7 @@
     "starship.toml".source = ../config/starship.toml;
     "mise/config.toml".source = ../config/mise/config.toml;
     "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;
+    "ghostty/config".source = ../config/ghostty/config;
   };
 
   # Git configuration
