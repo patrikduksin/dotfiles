@@ -2,12 +2,8 @@
 
 {
   # Nix configuration
-  nix = {
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-      warn-dirty = false;
-    };
-  };
+  # Disable nix-darwin's Nix management since we're using Determinate
+  nix.enable = false;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -26,6 +22,11 @@
       cleanup = "zap";  # Remove unlisted packages
       upgrade = true;
     };
+
+    # Taps
+    taps = [
+      "nikitabobko/tap"  # For aerospace
+    ];
 
     # CLI tools
     brews = [
@@ -56,7 +57,7 @@
       # Essential
       "1password"
       "1password-cli"
-      "aerospace"
+      "nikitabobko/tap/aerospace"
       "raycast"
       "ghostty"
       "cursor"
@@ -92,7 +93,6 @@
       "notion"
       "notion-calendar"
       "chatgpt"
-      "superwhisper"
     ];
 
     # Mac App Store apps
@@ -110,10 +110,12 @@
       # Dock settings
       dock = {
         autohide = true;
+        magnification = true;
+        largesize = 88;
         minimize-to-application = true;
         mru-spaces = false;
         show-recents = false;
-        tilesize = 48;
+        tilesize = 59;
       };
 
       # Finder settings
@@ -129,9 +131,9 @@
 
       # Global settings
       NSGlobalDomain = {
-        # Keyboard
-        KeyRepeat = 2;
-        InitialKeyRepeat = 15;
+        # Keyboard - fastest repeat rate and shortest delay
+        KeyRepeat = 1;
+        InitialKeyRepeat = 10;
         ApplePressAndHoldEnabled = false;
 
         # Mouse/Trackpad
@@ -159,12 +161,65 @@
         Show24Hour = true;
         ShowSeconds = false;
       };
+
+      # Disable Spotlight keyboard shortcuts (Cmd+Space)
+      CustomUserPreferences = {
+        "com.apple.symbolichotkeys" = {
+          AppleSymbolicHotKeys = {
+            # 64 = Show Spotlight search (Cmd+Space)
+            "64" = {
+              enabled = false;
+            };
+            # 65 = Show Finder search window (Cmd+Option+Space)
+            "65" = {
+              enabled = false;
+            };
+          };
+        };
+        # Raycast global hotkey (Cmd+Space, keycode 49 = Space)
+        "com.raycast.macos" = {
+          raycastGlobalHotkey = "Command-49";
+        };
+        # Input sources (keyboards)
+        "com.apple.HIToolbox" = {
+          AppleCurrentKeyboardLayoutInputSourceID = "com.apple.keylayout.US";
+          AppleEnabledInputSources = [
+            { InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 0; "KeyboardLayout Name" = "U.S."; }
+            { InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 19458; "KeyboardLayout Name" = "RussianWin"; }
+          ];
+          AppleSelectedInputSources = [
+            { InputSourceKind = "Keyboard Layout"; "KeyboardLayout ID" = 0; "KeyboardLayout Name" = "U.S."; }
+          ];
+        };
+        # Use Caps Lock to switch input source
+        NSGlobalDomain = {
+          TISRomanSwitchState = 1;
+        };
+      };
     };
 
     # Keyboard settings
     keyboard = {
       enableKeyMapping = true;
       remapCapsLockToEscape = false;
+      # Remap F4/F5/F6 to old MacBook Pro behavior
+      userKeyMapping = [
+        # F4 (Spotlight) → Launchpad (0xC00000221 → 0xC000002A2)
+        {
+          HIDKeyboardModifierMappingSrc = 51539608097;
+          HIDKeyboardModifierMappingDst = 51539608226;
+        }
+        # F5 (Dictation) → Keyboard Brightness Down (0xC000000CF → 0xFF00000009)
+        {
+          HIDKeyboardModifierMappingSrc = 51539607759;
+          HIDKeyboardModifierMappingDst = 1095216660489;
+        }
+        # F6 (Do Not Disturb) → Keyboard Brightness Up (0x10000009B → 0xFF00000008)
+        {
+          HIDKeyboardModifierMappingSrc = 4294967451;
+          HIDKeyboardModifierMappingDst = 1095216660488;
+        }
+      ];
     };
   };
 
