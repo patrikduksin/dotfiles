@@ -4,26 +4,22 @@ macOS system configuration using Nix Darwin and Home Manager.
 
 ## Fresh Mac Setup
 
-### 1. Install Nix
-
-```bash
-curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
-```
-
-### 2. Clone this repo
+### 1. Clone this repo
 
 ```bash
 git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-### 3. Build and apply
+### 2. Run the install script
+
+This will install Homebrew, Nix, and apply the nix-darwin configuration:
 
 ```bash
-nix run nix-darwin -- switch --flake .
+./install.sh
 ```
 
-### 4. Subsequent updates
+### 3. Subsequent updates
 
 ```bash
 darwin-rebuild switch --flake ~/dotfiles
@@ -40,7 +36,7 @@ darwin-rebuild switch --flake ~/dotfiles
 - Communication: Slack, Telegram, WhatsApp, Zoom, Discord, Teams, Loom
 - Development: Figma, Insomnia, ngrok, mitmproxy, Xcodes, OpenMTP
 - Utilities: AlDente, HiddenBar, OBS, Macs Fan Control, Contexts, IINA
-- Apps: Spotify, Notion, Notion Calendar, ChatGPT, SuperWhisper
+- Apps: Spotify, Notion, Notion Calendar, ChatGPT
 
 **Mac App Store:** Infuse
 
