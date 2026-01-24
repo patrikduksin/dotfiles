@@ -9,6 +9,19 @@ function __op_env_is_named_pipe -a filepath
     test -p "$filepath"
 end
 
+# Helper to read with timeout (macOS compatible)
+function __op_env_read_with_timeout -a timeout_secs filepath
+    # Try gtimeout (Homebrew coreutils), then timeout (Linux), then fall back to cat
+    if command -q gtimeout
+        gtimeout $timeout_secs cat "$filepath" 2>/dev/null
+    else if command -q timeout
+        timeout $timeout_secs cat "$filepath" 2>/dev/null
+    else
+        # No timeout available, just read directly
+        cat "$filepath" 2>/dev/null
+    end
+end
+
 function __op_env_load
     set -l envrc_path "$PWD/.envrc"
 
@@ -27,7 +40,7 @@ function __op_env_load
         # Read from the named pipe with timeout
         # 1Password will prompt for authorization
         set -l content
-        if set content (timeout 30 cat "$envrc_path" 2>/dev/null)
+        if set content (__op_env_read_with_timeout 30 "$envrc_path")
             set -g __op_env_loaded_dir "$PWD"
             set -g __op_env_loaded_vars
 
