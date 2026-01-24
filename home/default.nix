@@ -16,6 +16,7 @@
   # Symlink config files
   xdg.configFile = {
     "fish/config.fish".source = ../config/fish/config.fish;
+    "fish/conf.d/op_auto_env.fish".source = ../config/fish/conf.d/op_auto_env.fish;
     "starship.toml".source = ../config/starship.toml;
     "mise/config.toml".source = ../config/mise/config.toml;
     "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;

@@ -16,6 +16,9 @@ set -gx PATH $BUN_INSTALL/bin $PATH
 # mise (version manager)
 mise activate fish | source
 
+# direnv (auto-load .envrc files)
+direnv hook fish | source
+
 # Local binaries
 set -gx PATH $HOME/.local/bin $PATH
 
