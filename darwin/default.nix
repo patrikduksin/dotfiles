@@ -87,6 +87,7 @@
       "macs-fan-control"
       "contexts"
       "iina"
+      "wispr-flow"
 
       # Apps
       "spotify"
