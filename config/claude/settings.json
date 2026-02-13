@@ -2,5 +2,9 @@
   "attribution": {
     "commit": "",
     "pr": ""
+  },
+  "env": {
+    "CLAUDE_CODE_SHELL": "fish",
+    "ENABLE_TOOL_SEARCH": true
   }
 }

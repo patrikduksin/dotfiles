@@ -12,6 +12,7 @@
   environment.systemPackages = with pkgs; [
     git
     vim
+    tmux
   ];
 
   # Homebrew configuration
@@ -50,6 +51,7 @@
       "watchman"
       "mas"
       "gh"
+      "codex"
     ];
 
     # GUI applications
