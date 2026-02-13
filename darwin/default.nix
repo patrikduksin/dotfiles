@@ -51,7 +51,6 @@
       "watchman"
       "mas"
       "gh"
-      "codex"
     ];
 
     # GUI applications
@@ -96,6 +95,7 @@
       "notion"
       "notion-calendar"
       "chatgpt"
+      "codex"
       "codex-app"
     ];
 
