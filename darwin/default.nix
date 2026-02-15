@@ -51,6 +51,7 @@
       "watchman"
       "mas"
       "gh"
+      "anomalyco/tap/opencode"
     ];
 
     # GUI applications
