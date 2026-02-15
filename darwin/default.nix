@@ -31,6 +31,7 @@
 
     # CLI tools
     brews = [
+      "aria2"
       "bat"
       "eza"
       "fd"
