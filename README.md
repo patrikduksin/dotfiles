@@ -43,10 +43,17 @@ darwin-rebuild switch --flake ~/dotfiles
 ### Configuration Files
 
 - Fish shell config
+- Zsh shell config
 - Starship prompt (Nerd Font symbols)
 - Git config (1Password SSH signing)
 - mise version manager
 - Aerospace window manager
+
+### Shell Defaults
+
+- Login shell: zsh
+- Ghostty shell: fish (`/opt/homebrew/bin/fish`)
+- Claude Code shell override: zsh
 
 ### macOS Settings
 
@@ -111,7 +118,9 @@ Enable SSH agent in 1Password settings for git signing to work.
 │   └── default.nix           # home-manager: dotfiles, programs
 └── config/
     ├── fish/config.fish
+    ├── zsh/.zshrc
     ├── starship.toml
+    ├── claude/settings.json
     ├── mise/config.toml
     └── aerospace/aerospace.toml
 ```

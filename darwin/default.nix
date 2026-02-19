@@ -235,15 +235,16 @@
   # Primary user for user-specific settings
   system.primaryUser = username;
 
-  # Set fish as the default shell
+  # Shell configuration: keep fish available and use zsh as login shell
   programs.fish.enable = true;
-  environment.shells = [ pkgs.fish ];
+  programs.zsh.enable = true;
+  environment.shells = [ pkgs.fish pkgs.zsh ];
 
   # User configuration
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
-    shell = pkgs.fish;
+    shell = pkgs.zsh;
   };
 
   # Fonts (nerd-fonts are now individual packages)

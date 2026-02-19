@@ -24,7 +24,10 @@
   };
 
   # Claude Code global settings
-  home.file.".claude/settings.json".source = ../config/claude/settings.json;
+  home.file = {
+    ".claude/settings.json".source = ../config/claude/settings.json;
+    ".zshrc".source = ../config/zsh/.zshrc;
+  };
 
   # Git configuration
   programs.git = {
@@ -48,12 +51,14 @@
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Zoxide (smarter cd)
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Direnv
@@ -66,6 +71,7 @@
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
+    enableZshIntegration = true;
   };
 
   # Cursor extensions (managed manually - just documenting here)
