@@ -1,26 +1,22 @@
-# Zsh shell configuration
+# Interactive zsh configuration.
+# Shared environment setup lives in .zshenv.
 
-# Nix
-export PATH="/run/current-system/sw/bin:$PATH"
-
-# Homebrew
-eval "$(/opt/homebrew/bin/brew shellenv)"
+[[ $- != *i* ]] && return
 
 # Starship prompt
-eval "$(starship init zsh)"
-
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
 # mise (version manager)
-eval "$(mise activate zsh)"
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
 
 # direnv (auto-load .envrc files)
-eval "$(direnv hook zsh)"
-
-# Local binaries
-export PATH="$HOME/.local/bin:$PATH"
+if command -v direnv >/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
 
 # Aliases
 alias ls='eza'

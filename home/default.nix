@@ -26,6 +26,7 @@
   # Claude Code global settings
   home.file = {
     ".claude/settings.json".source = ../config/claude/settings.json;
+    ".zshenv".source = ../config/zsh/.zshenv;
     ".zshrc".source = ../config/zsh/.zshrc;
   };
 
