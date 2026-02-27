@@ -97,7 +97,6 @@
       "notion"
       "notion-calendar"
       "chatgpt"
-      "codex"
       "codex-app"
     ];
 

@@ -2,6 +2,8 @@
 bun = "latest"
 node = "latest"
 "npm:prettier" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:eas-cli" = "latest"
 pnpm = "latest"
 rust = "stable"
 uv = "latest"
