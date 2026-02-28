@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, lib, username, ... }:
 
 {
   home = {
@@ -74,6 +74,14 @@
     enableFishIntegration = true;
     enableZshIntegration = true;
   };
+
+  # Install OpenClaw once during Home Manager activation
+  home.activation.openclawSetup = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    if ! command -v openclaw >/dev/null 2>&1; then
+      echo "Installing OpenClaw..."
+      ${pkgs.curl}/bin/curl -fsSL https://openclaw.ai/install.sh | ${pkgs.bash}/bin/bash
+    fi
+  '';
 
   # Cursor extensions (managed manually - just documenting here)
   # Extensions to install via Cursor:
