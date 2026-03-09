@@ -27,7 +27,6 @@
     # Taps
     taps = [
       "nikitabobko/tap"  # For aerospace
-      "PeonPing/tap"
     ];
 
     # CLI tools
@@ -54,7 +53,6 @@
       "mas"
       "gh"
       "anomalyco/tap/opencode"
-      "PeonPing/tap/peon-ping"
     ];
 
     # GUI applications
