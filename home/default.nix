@@ -99,6 +99,7 @@ in
     enable = true;
     package = peonPingPackage;
     settings = {
+      volume = 1;
       default_pack = "peon_ru";
     };
     installPacks = [
