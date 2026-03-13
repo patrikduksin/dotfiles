@@ -104,6 +104,9 @@ in
   programs.peon-ping = {
     enable = true;
     package = peonPingPackage;
+    settings = {
+      default_pack = "peon_ru";
+    };
     installPacks = [
       "glados"
       "peasant"
