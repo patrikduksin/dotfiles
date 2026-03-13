@@ -6,7 +6,6 @@ let
 
   peonHookCommand = "${homeDir}/.openpeon/peon.sh";
   peonUseHookCommand = "${homeDir}/.openpeon/scripts/hook-handle-use.sh";
-  peonRenameHookCommand = "${homeDir}/.openpeon/scripts/hook-handle-rename.sh";
 
   peonSyncHook = {
     type = "command";
@@ -39,11 +38,6 @@ let
               {
                 type = "command";
                 command = peonUseHookCommand;
-                timeout = 5;
-              }
-              {
-                type = "command";
-                command = peonRenameHookCommand;
                 timeout = 5;
               }
             ];
