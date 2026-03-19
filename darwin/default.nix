@@ -44,6 +44,7 @@
       "mise"
       "fish"
       "starship"
+      "sox"
       "ffmpeg"
       "imagemagick"
       "cmake"
