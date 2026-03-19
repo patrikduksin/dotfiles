@@ -2,9 +2,6 @@
 
 let
   homeDir = config.home.homeDirectory;
-
-  claudeSettings =
-    (builtins.fromJSON (builtins.readFile ../config/claude/settings.json));
 in
 {
   home = {
@@ -29,9 +26,7 @@ in
     "ghostty/config".source = ../config/ghostty/config;
   };
 
-  # Claude Code global settings
   home.file = {
-    ".claude/settings.json".text = builtins.toJSON claudeSettings;
     ".zshenv".source = ../config/zsh/.zshenv;
     ".zshrc".source = ../config/zsh/.zshrc;
   };
