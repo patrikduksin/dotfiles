@@ -1,76 +1,17 @@
 { config, pkgs, lib, inputs, username, ... }:
 
 let
-  peonPingPackage = inputs.peon-ping.packages.${pkgs.system}.default;
   homeDir = config.home.homeDirectory;
 
-  peonHookCommand = "${homeDir}/.openpeon/peon.sh";
-  peonUseHookCommand = "${homeDir}/.openpeon/scripts/hook-handle-use.sh";
-
-  peonSyncHook = {
-    type = "command";
-    command = peonHookCommand;
-    timeout = 10;
-  };
-
-  peonAsyncHook = peonSyncHook // {
-    async = true;
-  };
-
   claudeSettings =
-    (builtins.fromJSON (builtins.readFile ../config/claude/settings.json))
-    // {
-      hooks = {
-        SessionStart = [
-          { matcher = ""; hooks = [ peonSyncHook ]; }
-        ];
-        SessionEnd = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-        SubagentStart = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-        UserPromptSubmit = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-          {
-            matcher = "";
-            hooks = [
-              {
-                type = "command";
-                command = peonUseHookCommand;
-                timeout = 5;
-              }
-            ];
-          }
-        ];
-        Stop = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-        Notification = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-        PermissionRequest = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-        PostToolUseFailure = [
-          { matcher = "Bash"; hooks = [ peonAsyncHook ]; }
-        ];
-        PreCompact = [
-          { matcher = ""; hooks = [ peonAsyncHook ]; }
-        ];
-      };
-    };
+    (builtins.fromJSON (builtins.readFile ../config/claude/settings.json));
 in
 {
-  imports = [ inputs.peon-ping.homeManagerModules.default ];
-
   home = {
     username = username;
     homeDirectory = "/Users/${username}";
     stateVersion = "24.05";
   };
-
-  home.packages = [ peonPingPackage ];
 
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
@@ -94,25 +35,6 @@ in
     ".zshenv".source = ../config/zsh/.zshenv;
     ".zshrc".source = ../config/zsh/.zshrc;
   };
-
-  programs.peon-ping = {
-    enable = true;
-    package = peonPingPackage;
-    settings = {
-      volume = 1;
-      default_pack = "peon_ru";
-    };
-    installPacks = [
-      "glados"
-      "peasant"
-      "peon"
-      "peon_ru"
-      "sc_battlecruiser"
-      "sc_kerrigan"
-    ];
-  };
-
-  home.sessionVariables.CLAUDE_PEON_DIR = "${homeDir}/.openpeon";
 
   # Git configuration
   programs.git = {
