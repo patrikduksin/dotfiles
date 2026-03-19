@@ -6,5 +6,6 @@
   "env": {
     "CLAUDE_CODE_SHELL": "zsh",
     "ENABLE_TOOL_SEARCH": "true"
-  }
+  },
+  "voiceEnabled": true
 }
