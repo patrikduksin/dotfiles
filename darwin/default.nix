@@ -54,12 +54,12 @@
       "mas"
       "gh"
       "anomalyco/tap/opencode"
-      "entireio/tap/entire"
     ];
 
     # GUI applications
     casks = [
       # Essential
+      "entireio/tap/entire"
       "1password"
       "1password-cli"
       "nikitabobko/tap/aerospace"
