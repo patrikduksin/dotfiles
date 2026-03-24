@@ -54,6 +54,7 @@
       "mas"
       "gh"
       "anomalyco/tap/opencode"
+      "entireio/tap/entire"
     ];
 
     # GUI applications
