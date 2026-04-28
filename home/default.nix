@@ -93,6 +93,7 @@ in
         node \
         npm:prettier \
         npm:@openai/codex \
+        npm:@anthropic-ai/claude-code \
         npm:eas-cli \
         pnpm \
         rust \
@@ -101,7 +102,7 @@ in
       # Prevent node global npm installs from shadowing dedicated npm:* tools.
       for node_npm in "$HOME"/.local/share/mise/installs/node/*/bin/npm; do
         [ -x "$node_npm" ] || continue
-        "$node_npm" uninstall -g @openai/codex eas-cli >/dev/null 2>&1 || true
+        "$node_npm" uninstall -g @openai/codex @anthropic-ai/claude-code eas-cli >/dev/null 2>&1 || true
       done
 
       "$MISE_BIN" reshim >/dev/null 2>&1 || true

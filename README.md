@@ -46,7 +46,7 @@ darwin-rebuild switch --flake ~/dotfiles
 - Zsh shell config (interactive + non-interactive)
 - Starship prompt (Nerd Font symbols)
 - Git config (1Password SSH signing)
-- mise version manager
+- mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, Rust, and uv
 - Aerospace window manager
 
 ### Shell Defaults
@@ -87,13 +87,7 @@ vscodevim.vim
 yoavbls.pretty-ts-errors
 ```
 
-### 3. Install Claude Code
-
-```bash
-bun install -g @anthropic-ai/claude-code
-```
-
-### 4. Sign in to apps
+### 3. Sign in to apps
 
 - 1Password
 - Raycast
@@ -102,7 +96,7 @@ bun install -g @anthropic-ai/claude-code
 - Notion
 - Figma
 
-### 5. Configure 1Password SSH agent
+### 4. Configure 1Password SSH agent
 
 Enable SSH agent in 1Password settings for git signing to work.
 

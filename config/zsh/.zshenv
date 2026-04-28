@@ -16,12 +16,6 @@ if [ -d "$HOME/.local/bin" ]; then
   path=("$HOME/.local/bin" $path)
 fi
 
-# Bun
-export BUN_INSTALL="$HOME/.bun"
-if [ -d "$BUN_INSTALL/bin" ]; then
-  path=("$BUN_INSTALL/bin" $path)
-fi
-
 # mise shims (so non-interactive shells resolve tool versions too)
 if [ -d "$HOME/.local/share/mise/shims" ]; then
   path=("$HOME/.local/share/mise/shims" $path)
