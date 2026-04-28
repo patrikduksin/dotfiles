@@ -9,10 +9,6 @@ eval "$(/opt/homebrew/bin/brew shellenv fish)"
 # Starship prompt
 starship init fish | source
 
-# Bun
-set -gx BUN_INSTALL $HOME/.bun
-set -gx PATH (string match --invert --entire $BUN_INSTALL/bin $PATH)
-
 # mise (version manager)
 mise activate fish | source
 
