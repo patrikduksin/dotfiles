@@ -42,6 +42,7 @@
       "yazi"
       "direnv"
       "mise"
+      "mole"
       "fish"
       "starship"
       "sox"
