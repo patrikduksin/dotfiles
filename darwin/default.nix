@@ -21,6 +21,7 @@
     onActivation = {
       autoUpdate = true;
       cleanup = "zap";  # Remove unlisted packages
+      extraFlags = [ "--force" ];  # Required by brew bundle when cleanup is enabled
       upgrade = true;
     };
 
@@ -83,7 +84,7 @@
       "insomnia"
       "ngrok"
       "mitmproxy"
-      "xcodes"
+      "xcodes-app"
       "openmtp"
 
       # Utilities
