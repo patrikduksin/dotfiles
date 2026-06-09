@@ -76,6 +76,28 @@ in
     enableZshIntegration = true;
   };
 
+  # Make Homebrew's Docker CLI plugins discoverable by `docker`.
+  home.activation.dockerCliPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    DOCKER_CONFIG_DIR="$HOME/.docker"
+    DOCKER_PLUGIN_DIR="$DOCKER_CONFIG_DIR/cli-plugins"
+    BREW_BIN="/opt/homebrew/bin/brew"
+
+    if [ ! -x "$BREW_BIN" ]; then
+      BREW_BIN="$(command -v brew || true)"
+    fi
+
+    if [ -n "$BREW_BIN" ] && [ -x "$BREW_BIN" ]; then
+      mkdir -p "$DOCKER_PLUGIN_DIR"
+
+      for plugin in docker-compose docker-buildx; do
+        plugin_bin="$("$BREW_BIN" --prefix)/opt/$plugin/bin/$plugin"
+        if [ -x "$plugin_bin" ]; then
+          ln -sfn "$plugin_bin" "$DOCKER_PLUGIN_DIR/$plugin"
+        fi
+      done
+    fi
+  '';
+
   # Keep mise tools on the newest available versions from global config.
   home.activation.miseSyncLatest = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
     MISE_BIN="/opt/homebrew/bin/mise"

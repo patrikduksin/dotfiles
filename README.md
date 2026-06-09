@@ -29,7 +29,7 @@ darwin-rebuild switch --flake ~/dotfiles
 
 ### Homebrew Packages
 
-**CLI Tools:** bat, eza, fd, fzf, ripgrep, zoxide, jq, yazi, direnv, mise, fish, starship, ffmpeg, imagemagick, cmake, cocoapods, fastlane, watchman, mas
+**CLI Tools:** bat, eza, fd, fzf, ripgrep, zoxide, jq, yazi, direnv, mise, colima, docker, docker-buildx, docker-compose, fish, starship, ffmpeg, imagemagick, cmake, cocoapods, fastlane, watchman, mas
 
 **Apps:**
 - Essential: 1Password, Aerospace, Raycast, Ghostty, Cursor, Helium
@@ -47,7 +47,29 @@ darwin-rebuild switch --flake ~/dotfiles
 - Starship prompt (Nerd Font symbols)
 - Git config (1Password SSH signing)
 - mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, Rust, and uv
+- Docker CLI with Colima runtime for running containers without Docker Desktop
 - Aerospace window manager
+
+### Docker CLI
+
+This setup installs Docker CLI tools and Colima. Start the local container runtime from the terminal:
+
+```bash
+docker-start
+```
+
+Then run containers normally:
+
+```bash
+docker run --rm hello-world
+docker compose version
+```
+
+Stop the runtime when you do not need it:
+
+```bash
+docker-stop
+```
 
 ### Shell Defaults
 
