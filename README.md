@@ -46,7 +46,7 @@ darwin-rebuild switch --flake ~/dotfiles
 - Zsh shell config (interactive + non-interactive)
 - Starship prompt (Nerd Font symbols)
 - Git config (1Password SSH signing)
-- mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, Rust, and uv
+- mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, agent-browser, Rust, and uv
 - Docker CLI with Colima runtime for running containers without Docker Desktop
 - Aerospace window manager
 
