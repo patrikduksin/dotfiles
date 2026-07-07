@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, lib, username, ... }:
 
 {
   # Nix configuration
@@ -28,6 +28,8 @@
     # Taps
     taps = [
       "nikitabobko/tap"  # For aerospace
+      "anomalyco/tap"  # For opencode
+      "entireio/tap"  # For entire
     ];
 
     # CLI tools
@@ -113,6 +115,14 @@
       "Infuse" = 1136220934;
     };
   };
+
+  system.activationScripts.homebrew.text = lib.mkBefore ''
+    if [ -x "/opt/homebrew/bin/brew" ]; then
+      sudo --user=${username} --set-home \
+        env PATH="/opt/homebrew/bin:$PATH" \
+        brew trust --tap anomalyco/tap nikitabobko/tap entireio/tap >/dev/null
+    fi
+  '';
 
   # macOS system settings
   system = {
