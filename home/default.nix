@@ -13,6 +13,9 @@ in
   # Let Home Manager manage itself
   programs.home-manager.enable = true;
 
+  # Avoid local Home Manager option-doc generation during system rebuilds.
+  manual.manpages.enable = false;
+
   # XDG directories
   xdg.enable = true;
 

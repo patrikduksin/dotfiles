@@ -20,8 +20,7 @@
     enable = true;
     onActivation = {
       autoUpdate = true;
-      cleanup = "zap";  # Remove unlisted packages
-      extraFlags = [ "--force" ];  # Required by brew bundle when cleanup is enabled
+      cleanup = "none";  # Avoid Homebrew's deprecated brew bundle --cleanup flag
       upgrade = true;
     };
 
