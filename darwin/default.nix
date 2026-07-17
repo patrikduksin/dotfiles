@@ -106,7 +106,6 @@
       "notion"
       "notion-calendar"
       "chatgpt"
-      "codex-app"
     ];
 
     # Mac App Store apps
