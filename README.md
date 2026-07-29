@@ -49,6 +49,17 @@ darwin-rebuild switch --flake ~/dotfiles
 - mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, agent-browser, Rust, and uv
 - Docker CLI with Colima runtime for running containers without Docker Desktop
 - Aerospace window manager
+- Herdr agent multiplexer with hybrid prefix and direct pane-navigation shortcuts
+
+### Herdr
+
+Herdr keeps the default `Ctrl-b` prefix and adds direct `Ctrl-Option-h/j/k/l`
+shortcuts for pane navigation. Frequently used tab, split, and zoom actions also
+have `Ctrl-Option` shortcuts while retaining their prefix bindings.
+
+Run `Ctrl-b ?` inside Herdr to see the active keymap. Use `Ctrl-b Shift-g` to
+create a Git worktree for an independent agent task, and `Ctrl-b q` to detach
+while agents continue running.
 
 ### Docker CLI
 
@@ -137,6 +148,7 @@ Enable SSH agent in 1Password settings for git signing to work.
     ├── zsh/.zshenv
     ├── zsh/.zshrc
     ├── starship.toml
+    ├── herdr/config.toml
     ├── claude/settings.json
     ├── mise/config.toml
     └── aerospace/aerospace.toml

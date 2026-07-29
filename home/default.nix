@@ -27,6 +27,7 @@ in
     "mise/config.toml".source = ../config/mise/config.toml;
     "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;
     "ghostty/config".source = ../config/ghostty/config;
+    "herdr/config.toml".source = ../config/herdr/config.toml;
   };
 
   home.file = {
