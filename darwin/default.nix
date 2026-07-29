@@ -60,6 +60,7 @@
       "watchman"
       "mas"
       "gh"
+      "herdr"
       "anomalyco/tap/opencode"
     ];
 
