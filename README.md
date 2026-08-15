@@ -38,7 +38,7 @@ mise -C ~/dotfiles bootstrap --dry-run
 # Inspect declarative state
 mise -C ~/dotfiles bootstrap status
 
-# Upgrade native packages, the three Homebrew casks, and mise tools
+# Upgrade native packages, the four Homebrew casks, and mise tools
 mise -C ~/dotfiles run update
 ```
 
@@ -48,7 +48,7 @@ The `rebuild` alias runs the first command.
 
 ### Homebrew
 
-`Brewfile` owns only Entire, AeroSpace, and Microsoft Teams because their custom metadata or installer behavior is not supported by mise. Homebrew remains as a narrow compatibility layer for those three casks.
+`Brewfile` owns only Entire, AeroSpace, Microsoft Teams, and ChatGPT. The first three need Homebrew compatibility; ChatGPT remains there so this running app is never replaced during a mise bootstrap.
 
 ### mise packages and tools
 
@@ -105,7 +105,7 @@ An older Fish configuration contained an exposed GitHub token. Confirm it remain
 ```text
 ~/dotfiles/
 ├── mise.toml                  # Workstation state, tools, defaults, tasks
-├── Brewfile                   # Three Homebrew-only compatibility casks
+├── Brewfile                   # Four Homebrew-only compatibility casks
 ├── install.sh                 # New-machine entry point
 ├── scripts/                   # Idempotent bootstrap helpers
 └── config/                    # Files symlinked into the home directory
@@ -115,4 +115,4 @@ An older Fish configuration contained an exposed GitHub token. Confirm it remain
 
 Running `./install.sh` repoints the Home Manager-owned dotfile symlinks to this repository and applies the mise configuration. It intentionally does not uninstall Nix or delete `/nix`; remove the old Nix installation separately only after verifying that `mise bootstrap status` and your daily tools work as expected.
 
-Existing Homebrew-owned casks cannot be adopted in place by mise. On this Mac, an ignored `mise.local.toml` temporarily disables native cask operations so the installed apps remain untouched. Fresh Macs use native mise casks immediately. Remove the local override only after deliberately uninstalling the standard casks with Homebrew so mise can reinstall and own them.
+Existing Homebrew-owned casks cannot be adopted in place by mise. Transfer them with a normal Homebrew uninstall (without `--zap`) followed by `mise bootstrap packages apply`; application data and preferences remain in place.

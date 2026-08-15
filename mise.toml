@@ -79,7 +79,6 @@ bun = true
 "brew-cask:spotify" = "latest"
 "brew-cask:notion" = "latest"
 "brew-cask:notion-calendar" = "latest"
-"brew-cask:chatgpt" = "latest"
 "brew-cask:font-jetbrains-mono-nerd-font" = "latest"
 "brew-cask:font-fira-code-nerd-font" = "latest"
 
