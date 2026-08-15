@@ -18,11 +18,21 @@ if command -v direnv >/dev/null 2>&1; then
   eval "$(direnv hook zsh)"
 fi
 
+# Smarter directory navigation
+if command -v zoxide >/dev/null 2>&1; then
+  eval "$(zoxide init zsh)"
+fi
+
+# Fuzzy finder shell integration
+if command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
+
 # Aliases
 alias ls='eza'
 alias ll='eza -la'
 alias cat='bat'
 alias find='fd'
-alias rebuild='sudo darwin-rebuild switch --flake $HOME/dotfiles'
+alias rebuild='mise -C $HOME/dotfiles bootstrap'
 alias docker-start='colima start'
 alias docker-stop='colima stop'

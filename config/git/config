@@ -1,0 +1,19 @@
+[user]
+	name = Patrik Duksin
+	email = patrikduksin@gmail.com
+	signingKey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0iOIEYecJt7by7sMJ6IuOOFyh0e39LojiY7QdeNGo+
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgsign = true
+
+[push]
+	autoSetupRemote = true
+
+[gpg]
+	format = ssh
+
+[gpg "ssh"]
+	program = /Applications/1Password.app/Contents/MacOS/op-ssh-sign

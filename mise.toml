@@ -1,0 +1,99 @@
+[tools]
+bun = "latest"
+node = "latest"
+"npm:prettier" = "latest"
+"npm:@openai/codex" = "latest"
+"npm:@anthropic-ai/claude-code" = "latest"
+"npm:eas-cli" = "latest"
+"npm:agent-browser" = "latest"
+"npm:@earendil-works/pi-coding-agent" = { version = "latest", bun_args = "--ignore-scripts", npm_args = "--ignore-scripts" }
+pnpm = "latest"
+rust = "stable"
+uv = "latest"
+
+[settings]
+experimental = true
+idiomatic_version_file_enable_tools = ["node"]
+
+[settings.npm]
+bun = true
+
+[dotfiles]
+"~/.zshenv" = { source = "~/dotfiles/config/zsh/.zshenv", mode = "symlink" }
+"~/.zshrc" = { source = "~/dotfiles/config/zsh/.zshrc", mode = "symlink" }
+"~/.config/git/config" = { source = "~/dotfiles/config/git/config", mode = "symlink" }
+"~/.config/fish/config.fish" = { source = "~/dotfiles/config/fish/config.fish", mode = "symlink" }
+"~/.config/fish/conf.d/op_auto_env.fish" = { source = "~/dotfiles/config/fish/conf.d/op_auto_env.fish", mode = "symlink" }
+"~/.config/starship.toml" = { source = "~/dotfiles/config/starship.toml", mode = "symlink" }
+"~/.config/aerospace/aerospace.toml" = { source = "~/dotfiles/config/aerospace/aerospace.toml", mode = "symlink" }
+"~/.config/ghostty/config" = { source = "~/dotfiles/config/ghostty/config", mode = "symlink" }
+"~/.config/herdr/config.toml" = { source = "~/dotfiles/config/herdr/config.toml", mode = "symlink" }
+"~/.config/mise/config.toml" = { source = "~/dotfiles/mise.toml", mode = "symlink" }
+
+[bootstrap.macos.dock]
+autohide = true
+magnification = true
+largesize = 88
+mru_spaces = false
+show_recents = false
+tilesize = 59
+
+[bootstrap.macos.finder]
+show_all_files = true
+show_pathbar = true
+show_status_bar = true
+show_extensions_warning = false
+preferred_view_style = "list"
+
+[bootstrap.macos.keyboard]
+key_repeat = 1
+initial_key_repeat = 10
+press_and_hold = false
+
+[bootstrap.macos.trackpad]
+tap_to_click = true
+three_finger_drag = true
+
+[bootstrap.macos.defaults]
+"com.apple.dock" = { "minimize-to-application" = true }
+"com.apple.finder" = { AppleShowAllExtensions = true, _FXShowPosixPathInTitle = true }
+NSGlobalDomain = { AppleInterfaceStyle = "Dark", AppleShowAllExtensions = true, "com.apple.mouse.tapBehavior" = 1, NSAutomaticCapitalizationEnabled = false, NSAutomaticDashSubstitutionEnabled = false, NSAutomaticPeriodSubstitutionEnabled = false, NSAutomaticQuoteSubstitutionEnabled = false, NSAutomaticSpellingCorrectionEnabled = false, TISRomanSwitchState = 1 }
+"com.apple.AppleMultitouchTrackpad" = { TrackpadRightClick = true }
+"com.apple.driver.AppleBluetoothMultitouch.trackpad" = { TrackpadRightClick = true }
+"com.apple.menuextra.clock" = { Show24Hour = true, ShowSeconds = false }
+"com.raycast.macos" = { raycastGlobalHotkey = "Command-49" }
+
+[bootstrap.macos.launchd.agents.keyboard-remapping]
+program = "/usr/bin/hidutil"
+args = [
+  "property",
+  "--set",
+  '{"UserKeyMapping":[{"HIDKeyboardModifierMappingSrc":51539608097,"HIDKeyboardModifierMappingDst":51539608226},{"HIDKeyboardModifierMappingSrc":51539607759,"HIDKeyboardModifierMappingDst":1095216660489},{"HIDKeyboardModifierMappingSrc":4294967451,"HIDKeyboardModifierMappingDst":1095216660488}]}'
+]
+run_at_load = true
+kickstart = true
+
+[bootstrap.user]
+login_shell = "/bin/zsh"
+
+[tasks.bootstrap]
+description = "Apply Homebrew packages and remaining macOS setup"
+run = [
+  "bash $HOME/dotfiles/scripts/brew-bootstrap.sh",
+  "bash $HOME/dotfiles/scripts/macos-extra.sh",
+  "bash $HOME/dotfiles/scripts/docker-plugins.sh",
+  "bash $HOME/dotfiles/scripts/mise-cleanup.sh",
+  "mise reshim",
+]
+
+[tasks.update]
+description = "Upgrade Homebrew packages and global mise tools"
+run = [
+  "brew update",
+  "brew bundle --file=$HOME/dotfiles/Brewfile",
+  "brew upgrade",
+  "brew upgrade --cask --greedy",
+  "mise upgrade --yes",
+  "bash $HOME/dotfiles/scripts/mise-cleanup.sh",
+  "mise reshim",
+]

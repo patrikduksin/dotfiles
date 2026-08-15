@@ -1,113 +1,89 @@
 # Patrik's Dotfiles
 
-macOS system configuration using Nix Darwin and Home Manager.
+Declarative macOS workstation setup powered by [mise bootstrap](https://mise.jdx.dev/bootstrap.html), Homebrew Bundle, and symlinked dotfiles.
 
 ## Fresh Mac Setup
 
-### 1. Clone this repo
+### 1. Clone the repository
 
 ```bash
 git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 ```
 
-### 2. Run the install script
-
-This will install Homebrew, Nix, and apply the nix-darwin configuration:
+### 2. Run the installer
 
 ```bash
 ./install.sh
 ```
 
-### 3. Subsequent updates
+The installer:
+
+1. Installs Homebrew when needed.
+2. Installs mise.
+3. Trusts this repository's `mise.toml`.
+4. Runs `mise bootstrap --yes`.
+
+Bootstrap converges the dotfiles, macOS preferences, keyboard LaunchAgent, login shell, global development tools, Homebrew packages, applications, fonts, and remaining idempotent setup.
+
+## Everyday Commands
 
 ```bash
-darwin-rebuild switch --flake ~/dotfiles
+# Reapply the desired machine state
+mise -C ~/dotfiles bootstrap
+
+# Preview declarative changes
+mise -C ~/dotfiles bootstrap --dry-run
+
+# Inspect declarative state
+mise -C ~/dotfiles bootstrap status
+
+# Upgrade Homebrew packages, casks, and mise tools
+mise -C ~/dotfiles run update
 ```
+
+The `rebuild` alias runs the first command.
 
 ## What's Included
 
-### Homebrew Packages
+### Homebrew
 
-**CLI Tools:** bat, eza, fd, fzf, ripgrep, zoxide, jq, yazi, direnv, mise, colima, docker, docker-buildx, docker-compose, fish, starship, ffmpeg, imagemagick, cmake, cocoapods, fastlane, watchman, mas
+`Brewfile` owns CLI packages, GUI applications, fonts, taps, and the Infuse Mac App Store installation. Homebrew Bundle is retained for maximum compatibility with custom taps, beta casks, and installer-based applications.
 
-**Apps:**
-- Essential: 1Password, Aerospace, Raycast, Ghostty, Cursor, Helium
-- Communication: Slack, Telegram, WhatsApp, Zoom, Discord, Teams, Loom
-- Development: Figma, Insomnia, ngrok, mitmproxy, Xcodes, OpenMTP
-- Utilities: AlDente, HiddenBar, OBS, Macs Fan Control, Contexts, IINA
-- Apps: Spotify, Notion, Notion Calendar, ChatGPT
+### mise tools
 
-**Mac App Store:** Infuse
+`mise.toml` installs Bun, Node.js, pnpm, Rust, uv, Prettier, Codex, Claude Code, eas-cli, agent-browser, pi-coding-agent, and related global tools.
 
-### Configuration Files
+### Dotfiles
 
-- Fish shell config
-- Zsh shell config (interactive + non-interactive)
-- Starship prompt (Nerd Font symbols)
-- Git config (1Password SSH signing)
-- mise version manager, including Bun, Node, pnpm, Codex, Claude Code, Prettier, eas-cli, agent-browser, Rust, and uv
-- Docker CLI with Colima runtime for running containers without Docker Desktop
-- Aerospace window manager
-- Herdr agent multiplexer with hybrid prefix and direct pane-navigation shortcuts
+- Fish and Zsh
+- Git with 1Password SSH signing
+- Starship
+- mise
+- Aerospace
+- Ghostty
+- Herdr
 
-### Herdr
+### macOS configuration
 
-Herdr keeps the default `Ctrl-b` prefix and adds direct `Ctrl-Option-h/j/k/l`
-shortcuts for pane navigation. Frequently used tab, split, and zoom actions also
-have `Ctrl-Option` shortcuts while retaining their prefix bindings.
-
-Run `Ctrl-b ?` inside Herdr to see the active keymap. Use `Ctrl-b Shift-g` to
-create a Git worktree for an independent agent task, and `Ctrl-b q` to detach
-while agents continue running.
-
-### Docker CLI
-
-This setup installs Docker CLI tools and Colima. Start the local container runtime from the terminal:
-
-```bash
-docker-start
-```
-
-Then run containers normally:
-
-```bash
-docker run --rm hello-world
-docker compose version
-```
-
-Stop the runtime when you do not need it:
-
-```bash
-docker-stop
-```
-
-### Shell Defaults
-
-- Login shell: zsh
-- Ghostty shell: fish (`/opt/homebrew/bin/fish`)
-- Claude Code shell override: zsh
-
-### macOS Settings
-
-- Dock: autohide, no recent apps
-- Finder: show all extensions, path bar, list view
-- Keyboard: fast key repeat
-- Trackpad: tap to click, three finger drag
-- Dark mode enabled
-- Touch ID for sudo
+- Dock, Finder, keyboard, trackpad, menu-bar clock, and dark mode defaults
+- Raycast on Command-Space with Spotlight shortcuts disabled
+- U.S. and RussianWin input sources
+- F4/F5/F6 hardware-key remapping through a mise-managed LaunchAgent
+- Touch ID for `sudo`
+- Docker Compose and buildx plugin discovery for the Homebrew Docker CLI
 
 ## Manual Steps
 
-### 1. Revoke exposed GitHub token
+### Accounts and permissions
 
-The old fish config had an exposed token. Revoke it at:
-https://github.com/settings/tokens
+Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and other account-backed applications. Enable the 1Password SSH agent so Git signing works. macOS privacy permissions and Apple Account authentication cannot be automated safely.
 
-### 2. Install Cursor extensions
+### Cursor extensions
 
-Open Cursor and install:
-```
+Install these manually:
+
+```text
 biomejs.biome
 dbaeumer.vscode-eslint
 dooez.alt-catppuccin-vsc
@@ -120,47 +96,21 @@ vscodevim.vim
 yoavbls.pretty-ts-errors
 ```
 
-### 3. Sign in to apps
+### Security reminder
 
-- 1Password
-- Raycast
-- Slack, Telegram, WhatsApp, Discord, Teams
-- Spotify
-- Notion
-- Figma
+An older Fish configuration contained an exposed GitHub token. Confirm it remains revoked at <https://github.com/settings/tokens>.
 
-### 4. Configure 1Password SSH agent
+## Repository Layout
 
-Enable SSH agent in 1Password settings for git signing to work.
-
-## Directory Structure
-
-```
+```text
 ~/dotfiles/
-├── flake.nix                 # Entry point
-├── flake.lock
-├── darwin/
-│   └── default.nix           # nix-darwin: brew, system settings
-├── home/
-│   └── default.nix           # home-manager: dotfiles, programs
-└── config/
-    ├── fish/config.fish
-    ├── zsh/.zshenv
-    ├── zsh/.zshrc
-    ├── starship.toml
-    ├── herdr/config.toml
-    ├── claude/settings.json
-    ├── mise/config.toml
-    └── aerospace/aerospace.toml
+├── mise.toml                  # Workstation state, tools, defaults, tasks
+├── Brewfile                   # Homebrew packages, apps, fonts, App Store apps
+├── install.sh                 # New-machine entry point
+├── scripts/                   # Idempotent bootstrap helpers
+└── config/                    # Files symlinked into the home directory
 ```
 
-## Updating
+## Migrating an Existing Nix-managed Mac
 
-```bash
-# Update flake inputs
-cd ~/dotfiles
-nix flake update
-
-# Apply changes
-darwin-rebuild switch --flake .
-```
+Running `./install.sh` repoints the Home Manager-owned dotfile symlinks to this repository and applies the mise configuration. It intentionally does not uninstall Nix or delete `/nix`; remove the old Nix installation separately only after verifying that `mise bootstrap status` and your daily tools work as expected.
