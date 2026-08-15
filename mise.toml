@@ -7,6 +7,7 @@ node = "latest"
 "npm:eas-cli" = "latest"
 "npm:agent-browser" = "latest"
 "npm:@earendil-works/pi-coding-agent" = { version = "latest", bun_args = "--ignore-scripts", npm_args = "--ignore-scripts" }
+"npm:opencode-ai" = "latest"
 pnpm = "latest"
 rust = "stable"
 uv = "latest"
@@ -17,6 +18,72 @@ idiomatic_version_file_enable_tools = ["node"]
 
 [settings.npm]
 bun = true
+
+[bootstrap.packages]
+"brew:aria2" = "latest"
+"brew:bat" = "latest"
+"brew:eza" = "latest"
+"brew:fd" = "latest"
+"brew:fzf" = "latest"
+"brew:ripgrep" = "latest"
+"brew:zoxide" = "latest"
+"brew:jq" = "latest"
+"brew:yazi" = "latest"
+"brew:direnv" = "latest"
+"brew:mise" = "latest"
+"brew:mole" = "latest"
+"brew:colima" = "latest"
+"brew:docker" = "latest"
+"brew:docker-buildx" = "latest"
+"brew:docker-compose" = "latest"
+"brew:fish" = "latest"
+"brew:starship" = "latest"
+"brew:sox" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:imagemagick" = "latest"
+"brew:cmake" = "latest"
+"brew:cocoapods" = "latest"
+"brew:fastlane" = "latest"
+"brew:watchman" = "latest"
+"brew:mas" = "latest"
+"brew:gh" = "latest"
+"brew:git" = "latest"
+"brew:vim" = "latest"
+"brew:tmux" = "latest"
+"brew:herdr" = "latest"
+
+"brew-cask:1password" = "latest"
+"brew-cask:1password-cli" = "latest"
+"brew-cask:raycast" = "latest"
+"brew-cask:ghostty" = "latest"
+"brew-cask:cursor" = "latest"
+"brew-cask:helium-browser" = "latest"
+"brew-cask:slack@beta" = "latest"
+"brew-cask:telegram" = "latest"
+"brew-cask:whatsapp" = "latest"
+"brew-cask:zoom" = "latest"
+"brew-cask:discord" = "latest"
+"brew-cask:loom" = "latest"
+"brew-cask:figma@beta" = "latest"
+"brew-cask:insomnia" = "latest"
+"brew-cask:mitmproxy" = "latest"
+"brew-cask:xcodes-app" = "latest"
+"brew-cask:openmtp" = "latest"
+"brew-cask:aldente" = "latest"
+"brew-cask:hiddenbar" = "latest"
+"brew-cask:obs" = "latest"
+"brew-cask:macs-fan-control" = "latest"
+"brew-cask:contexts" = "latest"
+"brew-cask:iina" = "latest"
+"brew-cask:wispr-flow" = "latest"
+"brew-cask:spotify" = "latest"
+"brew-cask:notion" = "latest"
+"brew-cask:notion-calendar" = "latest"
+"brew-cask:chatgpt" = "latest"
+"brew-cask:font-jetbrains-mono-nerd-font" = "latest"
+"brew-cask:font-fira-code-nerd-font" = "latest"
+
+"mas:1136220934" = "latest"
 
 [dotfiles]
 "~/.zshenv" = { source = "~/dotfiles/config/zsh/.zshenv", mode = "symlink" }
@@ -89,10 +156,9 @@ run = [
 [tasks.update]
 description = "Upgrade Homebrew packages and global mise tools"
 run = [
-  "brew update",
-  "brew bundle --file=$HOME/dotfiles/Brewfile",
-  "brew upgrade",
-  "brew upgrade --cask --greedy",
+  "mise bootstrap packages apply --yes",
+  "mise bootstrap packages upgrade --yes",
+  "bash $HOME/dotfiles/scripts/brew-bootstrap.sh",
   "mise upgrade --yes",
   "bash $HOME/dotfiles/scripts/mise-cleanup.sh",
   "mise reshim",

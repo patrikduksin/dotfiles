@@ -1,6 +1,6 @@
 # Patrik's Dotfiles
 
-Declarative macOS workstation setup powered by [mise bootstrap](https://mise.jdx.dev/bootstrap.html), Homebrew Bundle, and symlinked dotfiles.
+Declarative macOS workstation setup powered by [mise bootstrap](https://mise.jdx.dev/bootstrap.html), native mise package management, and symlinked dotfiles.
 
 ## Fresh Mac Setup
 
@@ -38,7 +38,7 @@ mise -C ~/dotfiles bootstrap --dry-run
 # Inspect declarative state
 mise -C ~/dotfiles bootstrap status
 
-# Upgrade Homebrew packages, casks, and mise tools
+# Upgrade native packages, the three Homebrew casks, and mise tools
 mise -C ~/dotfiles run update
 ```
 
@@ -48,11 +48,11 @@ The `rebuild` alias runs the first command.
 
 ### Homebrew
 
-`Brewfile` owns CLI packages, GUI applications, fonts, taps, and the Infuse Mac App Store installation. Homebrew Bundle is retained for maximum compatibility with custom taps, beta casks, and installer-based applications.
+`Brewfile` owns only Entire, AeroSpace, and Microsoft Teams because their custom metadata or installer behavior is not supported by mise. Homebrew remains as a narrow compatibility layer for those three casks.
 
-### mise tools
+### mise packages and tools
 
-`mise.toml` installs Bun, Node.js, pnpm, Rust, uv, Prettier, Codex, Claude Code, eas-cli, agent-browser, pi-coding-agent, and related global tools.
+`mise.toml` natively installs the remaining Homebrew formulae, GUI applications, fonts, Infuse, Bun, Node.js, pnpm, Rust, uv, Prettier, Codex, Claude Code, OpenCode through Bun, eas-cli, agent-browser, pi-coding-agent, and related global tools.
 
 ### Dotfiles
 
@@ -105,7 +105,7 @@ An older Fish configuration contained an exposed GitHub token. Confirm it remain
 ```text
 ~/dotfiles/
 ├── mise.toml                  # Workstation state, tools, defaults, tasks
-├── Brewfile                   # Homebrew packages, apps, fonts, App Store apps
+├── Brewfile                   # Three Homebrew-only compatibility casks
 ├── install.sh                 # New-machine entry point
 ├── scripts/                   # Idempotent bootstrap helpers
 └── config/                    # Files symlinked into the home directory
@@ -114,3 +114,5 @@ An older Fish configuration contained an exposed GitHub token. Confirm it remain
 ## Migrating an Existing Nix-managed Mac
 
 Running `./install.sh` repoints the Home Manager-owned dotfile symlinks to this repository and applies the mise configuration. It intentionally does not uninstall Nix or delete `/nix`; remove the old Nix installation separately only after verifying that `mise bootstrap status` and your daily tools work as expected.
+
+Existing Homebrew-owned casks cannot be adopted in place by mise. On this Mac, an ignored `mise.local.toml` temporarily disables native cask operations so the installed apps remain untouched. Fresh Macs use native mise casks immediately. Remove the local override only after deliberately uninstalling the standard casks with Homebrew so mise can reinstall and own them.

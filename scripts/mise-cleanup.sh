@@ -10,5 +10,6 @@ for node_npm in "$HOME"/.local/share/mise/installs/node/*/bin/npm; do
     eas-cli \
     agent-browser \
     @earendil-works/pi-coding-agent \
+    opencode-ai \
     >/dev/null 2>&1 || true
 done
