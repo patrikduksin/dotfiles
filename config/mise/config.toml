@@ -6,6 +6,7 @@ node = "latest"
 "npm:@anthropic-ai/claude-code" = "latest"
 "npm:eas-cli" = "latest"
 "npm:agent-browser" = "latest"
+"npm:@earendil-works/pi-coding-agent" = { version = "latest", bun_args = "--ignore-scripts", npm_args = "--ignore-scripts" }
 pnpm = "latest"
 rust = "stable"
 uv = "latest"
