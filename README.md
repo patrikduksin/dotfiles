@@ -48,7 +48,7 @@ The `rebuild` alias runs the first command.
 
 ### Homebrew
 
-`Brewfile` owns only Entire, AeroSpace, Microsoft Teams, and ChatGPT. The first three need Homebrew compatibility; ChatGPT remains there so this running app is never replaced during a mise bootstrap.
+`Brewfile` owns only Entire, AeroSpace, and Microsoft Teams. These remain on Homebrew for compatibility.
 
 ### mise packages and tools
 
