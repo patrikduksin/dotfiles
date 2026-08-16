@@ -62,9 +62,4 @@ export default function onePasswordEnvironment(pi: ExtensionAPI) {
   pi.on("session_start", async (event, ctx) => {
     if (event.reason === "startup" || event.reason === "reload") await loadSafely(ctx);
   });
-
-  pi.registerCommand("secrets-reload", {
-    description: "Reload web credentials from the 1Password Pi Environment",
-    handler: async (_args, ctx) => loadSafely(ctx),
-  });
 }

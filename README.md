@@ -84,7 +84,7 @@ Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and o
 
 Create a 1Password Environment containing `EXA_API_KEY`, `TAVILY_API_KEY`, and `FIRECRAWL_API_KEY`. Copy its Environment ID into `config/pi/extensions/onepassword-environment/config.json`.
 
-On each new Mac, open 1Password, go to **Settings → Developer**, and enable **Integrate with other apps** under the SDK integration section. Pi then loads the Environment on startup and `/reload`; use `/secrets-reload` to refresh it explicitly.
+On each new Mac, open 1Password, go to **Settings → Developer**, and enable **Integrate with other apps** under the SDK integration section. Pi loads the Environment on startup and `/reload`.
 
 ### Cursor extensions
 
