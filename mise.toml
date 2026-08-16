@@ -57,6 +57,7 @@ bun = true
 "brew-cask:raycast" = "latest"
 "brew-cask:ghostty" = "latest"
 "brew-cask:cursor" = "latest"
+"brew-cask:chatgpt" = "latest"
 "brew-cask:helium-browser" = "latest"
 "brew-cask:slack@beta" = "latest"
 "brew-cask:telegram" = "latest"
