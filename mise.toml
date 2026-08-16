@@ -90,6 +90,7 @@ bun = true
 "~/.config/aerospace/aerospace.toml" = { source = "~/dotfiles/config/aerospace/aerospace.toml", mode = "symlink" }
 "~/.config/ghostty/config" = { source = "~/dotfiles/config/ghostty/config", mode = "symlink" }
 "~/.config/herdr/config.toml" = { source = "~/dotfiles/config/herdr/config.toml", mode = "symlink" }
+"~/.pi/agent/settings.json" = { source = "~/dotfiles/config/pi/settings.json", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "~/dotfiles/mise.toml", mode = "symlink" }
 
 [bootstrap.macos.dock]

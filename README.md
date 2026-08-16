@@ -63,6 +63,7 @@ The `rebuild` alias runs the first command.
 - Aerospace
 - Ghostty
 - Herdr
+- Pi coding agent settings and packages
 
 ### macOS configuration
 
