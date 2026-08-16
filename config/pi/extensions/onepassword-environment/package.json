@@ -1,0 +1,16 @@
+{
+  "name": "pi-onepassword-environment",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@1password/sdk": "0.5.0"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
+  },
+  "peerDependenciesMeta": {
+    "@earendil-works/pi-coding-agent": {
+      "optional": true
+    }
+  }
+}

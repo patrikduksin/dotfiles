@@ -63,7 +63,7 @@ The `rebuild` alias runs the first command.
 - Aerospace
 - Ghostty
 - Herdr
-- Pi coding agent settings and packages
+- Pi coding agent settings, packages, and 1Password Environment credential loading
 
 ### macOS configuration
 
@@ -79,6 +79,12 @@ The `rebuild` alias runs the first command.
 ### Accounts and permissions
 
 Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and other account-backed applications. Enable the 1Password SSH agent so Git signing works. macOS privacy permissions and Apple Account authentication cannot be automated safely.
+
+### Pi web credentials
+
+Create a 1Password Environment containing `EXA_API_KEY`, `TAVILY_API_KEY`, and `FIRECRAWL_API_KEY`. Copy its Environment ID into `config/pi/extensions/onepassword-environment/config.json`.
+
+On each new Mac, open 1Password, go to **Settings → Developer**, and enable **Integrate with other apps** under the SDK integration section. Pi then loads the Environment on startup and `/reload`; use `/secrets-reload` to refresh it explicitly.
 
 ### Cursor extensions
 

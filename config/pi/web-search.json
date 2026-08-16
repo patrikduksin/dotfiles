@@ -1,0 +1,12 @@
+{
+  "exaApiKey": "$EXA_API_KEY",
+  "tavilyApiKey": "$TAVILY_API_KEY",
+  "firecrawlApiKey": "$FIRECRAWL_API_KEY",
+  "firecrawlBaseUrl": "https://api.firecrawl.dev",
+  "firecrawlApiVersion": "v2",
+  "firecrawlFreshScrape": false,
+  "searchRouting": {
+    "providers": ["exa", "tavily", "firecrawl"],
+    "fallbackOn": ["transient", "quota", "network", "invalid-response"]
+  }
+}

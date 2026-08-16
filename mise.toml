@@ -91,6 +91,8 @@ bun = true
 "~/.config/ghostty/config" = { source = "~/dotfiles/config/ghostty/config", mode = "symlink" }
 "~/.config/herdr/config.toml" = { source = "~/dotfiles/config/herdr/config.toml", mode = "symlink" }
 "~/.pi/agent/settings.json" = { source = "~/dotfiles/config/pi/settings.json", mode = "symlink" }
+"~/.pi/web-search.json" = { source = "~/dotfiles/config/pi/web-search.json", mode = "symlink" }
+"~/.pi/agent/extensions/onepassword-environment" = { source = "~/dotfiles/config/pi/extensions/onepassword-environment", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "~/dotfiles/mise.toml", mode = "symlink" }
 
 [bootstrap.macos.dock]
@@ -146,6 +148,7 @@ run = [
   "bash $HOME/dotfiles/scripts/macos-extra.sh",
   "bash $HOME/dotfiles/scripts/docker-plugins.sh",
   "bash $HOME/dotfiles/scripts/mise-cleanup.sh",
+  "bun install --cwd $HOME/dotfiles/config/pi/extensions/onepassword-environment --frozen-lockfile",
   "mise reshim",
 ]
 
