@@ -8,7 +8,7 @@
   ],
   "packages": [
     "npm:@firstpick/pi-themes-bundle",
-    "npm:pi-subagents",
+    "npm:pi-subagents-lite",
     "npm:pi-web-access"
   ]
 }
