@@ -6,7 +6,7 @@
   "firecrawlApiVersion": "v2",
   "firecrawlFreshScrape": false,
   "searchRouting": {
-    "providers": ["exa", "tavily", "firecrawl"],
+    "providers": ["exa", "firecrawl", "tavily", "openai"],
     "fallbackOn": ["transient", "quota", "network", "invalid-response"]
   }
 }
