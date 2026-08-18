@@ -51,6 +51,7 @@ bun = true
 "brew:vim" = "latest"
 "brew:tmux" = "latest"
 "brew:herdr" = "latest"
+"brew:ncspot" = "latest"
 
 "brew-cask:1password" = "latest"
 "brew-cask:1password-cli" = "latest"
