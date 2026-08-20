@@ -11,6 +11,7 @@ git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result
 sudo ./result/activate
+sudo chsh -s /run/current-system/sw/bin/fish "$USER"
 mise trust ~/.config/mise/config.toml
 mise install
 bun install --cwd config/pi/onepassword-environment --frozen-lockfile

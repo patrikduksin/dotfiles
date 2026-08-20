@@ -238,11 +238,8 @@
   # Shell configuration
   programs.fish.enable = true;
 
-  # User configuration
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
-    shell = pkgs.fish;
   };
-
 }
