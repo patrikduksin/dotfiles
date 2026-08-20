@@ -1,21 +1,17 @@
 { pkgs, lib, username, ... }:
 
 {
-  # Nix configuration
-  # Disable nix-darwin's Nix management since we're using Determinate
+  # Determinate manages Nix itself.
   nix.enable = false;
 
-  # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # System packages (minimal - prefer homebrew for GUI apps)
   environment.systemPackages = with pkgs; [
     git
     vim
     tmux
   ];
 
-  # Homebrew configuration
   homebrew = {
     enable = true;
     onActivation = {
@@ -24,14 +20,12 @@
       upgrade = true;
     };
 
-    # Taps
     taps = [
-      "nikitabobko/tap"  # For aerospace
-      "entireio/tap"  # For entire
-      "gouegd/korimako"  # For korimako
+      "nikitabobko/tap"
+      "entireio/tap"
+      "gouegd/korimako"
     ];
 
-    # CLI tools
     brews = [
       "aria2"
       "bat"
@@ -59,7 +53,6 @@
       "ncspot"
     ];
 
-    # GUI applications
     casks = [
       # Essential
       "entireio/tap/entire"
@@ -103,7 +96,6 @@
       "font-fira-code-nerd-font"
     ];
 
-    # Mac App Store apps
     masApps = {
       "Infuse" = 1136220934;
     };
@@ -117,9 +109,7 @@
     fi
   '';
 
-  # macOS system settings
   system = {
-    # Used for backwards compatibility
     stateVersion = 5;
 
     defaults = {

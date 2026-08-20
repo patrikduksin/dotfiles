@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = inputs@{ self, nixpkgs, nix-darwin, home-manager, ... }:
+  outputs = { nix-darwin, home-manager, ... }:
   let
     system = "aarch64-darwin";
     hostname = "Patriks-MacBook-Pro";
@@ -24,7 +24,7 @@
   {
     darwinConfigurations.${hostname} = nix-darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit inputs username; };
+      specialArgs = { inherit username; };
       modules = [
         ./darwin.nix
         home-manager.darwinModules.home-manager
@@ -32,13 +32,11 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            backupFileExtension = "backup";
-            extraSpecialArgs = { inherit inputs username; };
+            extraSpecialArgs = { inherit username; };
             users.${username} = import ./home.nix;
           };
         }
       ];
     };
-
   };
 }

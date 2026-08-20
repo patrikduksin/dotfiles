@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, username, ... }:
+{ config, username, ... }:
 
 let
   homeDir = config.home.homeDirectory;
@@ -16,16 +16,8 @@ in
     ];
   };
 
-  # Let Home Manager manage itself
-  programs.home-manager.enable = true;
-
-  # Avoid local Home Manager option-doc generation during system rebuilds.
   manual.manpages.enable = false;
 
-  # XDG directories
-  xdg.enable = true;
-
-  # Symlink config files
   xdg.configFile = {
     "mise/config.toml".source = ./config/mise.toml;
     "aerospace/aerospace.toml".source = ./config/aerospace.toml;
@@ -34,6 +26,8 @@ in
   };
 
   home.file = {
+    ".docker/cli-plugins/docker-buildx".source = config.lib.file.mkOutOfStoreSymlink "/opt/homebrew/opt/docker-buildx/bin/docker-buildx";
+    ".docker/cli-plugins/docker-compose".source = config.lib.file.mkOutOfStoreSymlink "/opt/homebrew/opt/docker-compose/bin/docker-compose";
     ".pi/agent/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/settings.json";
     ".pi/web-search.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/web-search.json";
     ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/onepassword-environment";
@@ -83,65 +77,24 @@ in
     };
   };
 
-  # Prompt and shell integrations
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
-    enableZshIntegration = true;
   };
 
-  # Zoxide (smarter cd)
   programs.zoxide = {
     enable = true;
     enableFishIntegration = true;
-    enableZshIntegration = true;
   };
 
-  # Direnv
   programs.direnv = {
     enable = true;
     nix-direnv.enable = true;
   };
 
-  # fzf
   programs.fzf = {
     enable = true;
     enableFishIntegration = true;
-    enableZshIntegration = true;
   };
 
-  # Make Homebrew's Docker CLI plugins discoverable by `docker`.
-  home.activation.dockerCliPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    DOCKER_CONFIG_DIR="$HOME/.docker"
-    DOCKER_PLUGIN_DIR="$DOCKER_CONFIG_DIR/cli-plugins"
-    BREW_BIN="/opt/homebrew/bin/brew"
-
-    if [ ! -x "$BREW_BIN" ]; then
-      BREW_BIN="$(command -v brew || true)"
-    fi
-
-    if [ -n "$BREW_BIN" ] && [ -x "$BREW_BIN" ]; then
-      mkdir -p "$DOCKER_PLUGIN_DIR"
-
-      for plugin in docker-compose docker-buildx; do
-        plugin_bin="$("$BREW_BIN" --prefix)/opt/$plugin/bin/$plugin"
-        if [ -x "$plugin_bin" ]; then
-          ln -sfn "$plugin_bin" "$DOCKER_PLUGIN_DIR/$plugin"
-        fi
-      done
-    fi
-  '';
-
-  # Cursor extensions (managed manually - just documenting here)
-  # Extensions to install via Cursor:
-  # - biomejs.biome
-  # - dbaeumer.vscode-eslint
-  # - dooez.alt-catppuccin-vsc
-  # - esbenp.prettier-vscode
-  # - expo.vscode-expo-theme
-  # - expo.vscode-expo-tools
-  # - redhat.vscode-yaml
-  # - rvest.vs-code-prettier-eslint
-  # - vscodevim.vim
-  # - yoavbls.pretty-ts-errors
 }
