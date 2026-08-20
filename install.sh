@@ -22,14 +22,20 @@ else
     echo "==> Homebrew already installed"
 fi
 
+# Existing Determinate Nix installs are not always on PATH in non-login shells.
+nix_profile="/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh"
+if [[ -f "$nix_profile" ]]; then
+    . "$nix_profile"
+fi
+
 # Install Nix if not present
 if ! command -v nix &> /dev/null; then
     echo "==> Installing Nix..."
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
 
     # Source nix
-    if [[ -f "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]]; then
-        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    if [[ -f "$nix_profile" ]]; then
+        . "$nix_profile"
     fi
 else
     echo "==> Nix already installed"
@@ -38,6 +44,7 @@ fi
 # Build and apply nix-darwin configuration
 echo "==> Building and applying nix-darwin configuration..."
 cd "$(dirname "$0")"
-nix run nix-darwin -- switch --flake .
+nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result
+sudo ./result/activate
 
 echo "==> Done! You may need to restart your terminal."

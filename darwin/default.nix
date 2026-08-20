@@ -102,6 +102,10 @@
       "notion-calendar"
       "chatgpt"
       "gouegd/korimako/korimako"
+
+      # Fonts
+      "font-jetbrains-mono-nerd-font"
+      "font-fira-code-nerd-font"
     ];
 
     # Mac App Store apps
@@ -258,9 +262,4 @@
     shell = pkgs.zsh;
   };
 
-  # Fonts (nerd-fonts are now individual packages)
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    nerd-fonts.fira-code
-  ];
 }
