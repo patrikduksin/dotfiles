@@ -132,52 +132,6 @@ in
     fi
   '';
 
-  # Keep mise tools on the newest available versions from global config.
-  home.activation.miseSyncLatest = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-    MISE_BIN="/opt/homebrew/bin/mise"
-    if [ ! -x "$MISE_BIN" ]; then
-      MISE_BIN="$(command -v mise || true)"
-    fi
-
-    if [ -n "$MISE_BIN" ] && [ -x "$MISE_BIN" ]; then
-      "$MISE_BIN" trust "$HOME/.config/mise/config.toml" >/dev/null 2>&1 || true
-
-      cd "$HOME"
-      "$MISE_BIN" install --yes >/dev/null 2>&1 || true
-      "$MISE_BIN" upgrade --yes \
-        bun \
-        node \
-        npm:prettier \
-        npm:@openai/codex \
-        npm:@anthropic-ai/claude-code \
-        npm:eas-cli \
-        npm:agent-browser \
-        npm:@earendil-works/pi-coding-agent \
-        npm:opencode-ai \
-        pnpm \
-        rust \
-        uv >/dev/null 2>&1 || true
-
-      # Prevent node global npm installs from shadowing dedicated npm:* tools.
-      for node_npm in "$HOME"/.local/share/mise/installs/node/*/bin/npm; do
-        [ -x "$node_npm" ] || continue
-        "$node_npm" uninstall -g @openai/codex @anthropic-ai/claude-code eas-cli agent-browser @earendil-works/pi-coding-agent opencode-ai >/dev/null 2>&1 || true
-      done
-
-      "$MISE_BIN" reshim >/dev/null 2>&1 || true
-    fi
-  '';
-
-  # Install the dependencies for the Pi 1Password Environment extension.
-  home.activation.piExtensionDependencies = lib.hm.dag.entryAfter [ "miseSyncLatest" ] ''
-    BUN_BIN="$HOME/.local/share/mise/shims/bun"
-    if [ -x "$BUN_BIN" ]; then
-      "$BUN_BIN" install \
-        --cwd "$HOME/dotfiles/config/pi/extensions/onepassword-environment" \
-        --frozen-lockfile >/dev/null
-    fi
-  '';
-
   # Cursor extensions (managed manually - just documenting here)
   # Extensions to install via Cursor:
   # - biomejs.biome

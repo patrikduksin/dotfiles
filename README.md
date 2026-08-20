@@ -8,6 +8,8 @@ Declarative macOS workstation setup powered by nix-darwin and Home Manager. mise
 git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
+mise install
+bun install --cwd config/pi/extensions/onepassword-environment --frozen-lockfile
 ```
 
 This assumes Homebrew and Determinate Nix are already installed.
@@ -22,6 +24,9 @@ nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result &&
 cd ~/dotfiles
 nix flake update
 nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
+
+# Update mise-managed developer tools
+mise upgrade
 ```
 
 ## What's Included
