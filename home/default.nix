@@ -27,8 +27,6 @@ in
 
   # Symlink config files
   xdg.configFile = {
-    "git/config".source = ../config/git/config;
-    "starship.toml".source = ../config/starship.toml;
     "mise/config.toml".source = ../config/mise/config.toml;
     "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;
     "ghostty/config".source = ../config/ghostty/config;
@@ -39,6 +37,26 @@ in
     ".pi/agent/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/settings.json";
     ".pi/web-search.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/web-search.json";
     ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/extensions/onepassword-environment";
+  };
+
+  programs.git = {
+    enable = true;
+    settings = {
+      user = {
+        name = "Patrik Duksin";
+        email = "patrikduksin@gmail.com";
+        signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE0iOIEYecJt7by7sMJ6IuOOFyh0e39LojiY7QdeNGo+";
+      };
+      commit.gpgSign = true;
+      tag.gpgSign = true;
+      push.autoSetupRemote = true;
+      gpg.format = "ssh";
+      gpg.ssh.program = "/Applications/1Password.app/Contents/MacOS/op-ssh-sign";
+      credential = {
+        "https://github.com".helper = [ "" "!gh auth git-credential" ];
+        "https://gist.github.com".helper = [ "" "!gh auth git-credential" ];
+      };
+    };
   };
 
   programs.fish = {
@@ -65,7 +83,7 @@ in
     };
   };
 
-  # Starship prompt
+  # Prompt and shell integrations
   programs.starship = {
     enable = true;
     enableFishIntegration = true;
