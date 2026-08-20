@@ -1,13 +1,10 @@
 # Ghostty Configuration
-# Modern dev setup with fish + starship
+# Modern development setup
 
 # Font
 font-family = JetBrainsMono Nerd Font
 font-size = 15
 font-thicken = true
-
-# Shell
-command = /opt/homebrew/bin/fish
 
 # Window
 window-padding-x = 12

@@ -8,6 +8,12 @@ in
     username = username;
     homeDirectory = "/Users/${username}";
     stateVersion = "24.05";
+    sessionPath = [
+      "$HOME/.local/share/mise/shims"
+      "$HOME/.local/bin"
+      "/opt/homebrew/bin"
+      "/opt/homebrew/sbin"
+    ];
   };
 
   # Let Home Manager manage itself
@@ -21,8 +27,6 @@ in
 
   # Symlink config files
   xdg.configFile = {
-    "fish/config.fish".source = ../config/fish/config.fish;
-    "fish/conf.d/op_auto_env.fish".source = ../config/fish/conf.d/op_auto_env.fish;
     "git/config".source = ../config/git/config;
     "starship.toml".source = ../config/starship.toml;
     "mise/config.toml".source = ../config/mise/config.toml;
@@ -32,11 +36,33 @@ in
   };
 
   home.file = {
-    ".zshenv".source = ../config/zsh/.zshenv;
-    ".zshrc".source = ../config/zsh/.zshrc;
     ".pi/agent/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/settings.json";
     ".pi/web-search.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/web-search.json";
     ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/extensions/onepassword-environment";
+  };
+
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      if command -q mise
+        mise activate fish | source
+      end
+    '';
+    shellAliases = {
+      ls = "eza";
+      ll = "eza -la";
+      cat = "bat";
+      find = "fd";
+      docker-start = "colima start";
+      docker-stop = "colima stop";
+    };
+    functions.rebuild = {
+      description = "Build and activate the nix-darwin configuration";
+      body = ''
+        nix build "$HOME/dotfiles#darwinConfigurations.Patriks-MacBook-Pro.system" --out-link "$HOME/dotfiles/result"; or return
+        sudo "$HOME/dotfiles/result/activate"
+      '';
+    };
   };
 
   # Starship prompt

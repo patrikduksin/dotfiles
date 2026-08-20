@@ -37,20 +37,15 @@
       "bat"
       "eza"
       "fd"
-      "fzf"
       "ripgrep"
-      "zoxide"
       "jq"
       "yazi"
-      "direnv"
       "mise"
       "mole"
       "colima"
       "docker"
       "docker-buildx"
       "docker-compose"
-      "fish"
-      "starship"
       "sox"
       "ffmpeg"
       "imagemagick"
@@ -250,16 +245,14 @@
   # Primary user for user-specific settings
   system.primaryUser = username;
 
-  # Shell configuration: keep fish available and use zsh as login shell
+  # Shell configuration
   programs.fish.enable = true;
-  programs.zsh.enable = true;
-  environment.shells = [ pkgs.fish pkgs.zsh ];
 
   # User configuration
   users.users.${username} = {
     name = username;
     home = "/Users/${username}";
-    shell = pkgs.zsh;
+    shell = pkgs.fish;
   };
 
 }
