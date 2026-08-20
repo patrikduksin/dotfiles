@@ -7,24 +7,22 @@ Declarative macOS workstation setup powered by nix-darwin and Home Manager. mise
 ```bash
 git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-./install.sh
+nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
 ```
 
-The installer installs Homebrew and Determinate Nix when needed, then builds and applies this flake's nix-darwin configuration.
+This assumes Homebrew and Determinate Nix are already installed.
 
 ## Everyday Commands
 
 ```bash
-# Reapply the desired machine state
-sudo darwin-rebuild switch --flake ~/dotfiles
+# Reapply the desired machine state (from ~/dotfiles)
+nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
 
 # Update flake inputs, then reapply
 cd ~/dotfiles
 nix flake update
-sudo darwin-rebuild switch --flake .
+nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
 ```
-
-The `rebuild` shell alias runs the first command.
 
 ## What's Included
 
@@ -78,6 +76,5 @@ On each new Mac, open 1Password, go to **Settings → Developer**, and enable **
 ├── darwin/default.nix        # nix-darwin system and Homebrew state
 ├── home/default.nix          # Home Manager programs and dotfiles
 ├── config/mise/config.toml   # Global mise-managed tools
-├── config/                   # Shell and application configuration
-└── install.sh                # New-machine entry point
+└── config/                   # Shell and application configuration
 ```
