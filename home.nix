@@ -27,16 +27,16 @@ in
 
   # Symlink config files
   xdg.configFile = {
-    "mise/config.toml".source = ../config/mise/config.toml;
-    "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;
-    "ghostty/config".source = ../config/ghostty/config;
-    "herdr/config.toml".source = ../config/herdr/config.toml;
+    "mise/config.toml".source = ./config/mise.toml;
+    "aerospace/aerospace.toml".source = ./config/aerospace.toml;
+    "ghostty/config".source = ./config/ghostty.conf;
+    "herdr/config.toml".source = ./config/herdr.toml;
   };
 
   home.file = {
     ".pi/agent/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/settings.json";
     ".pi/web-search.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/web-search.json";
-    ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/extensions/onepassword-environment";
+    ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/onepassword-environment";
   };
 
   programs.git = {

@@ -26,7 +26,7 @@
       inherit system;
       specialArgs = { inherit inputs username; };
       modules = [
-        ./darwin
+        ./darwin.nix
         home-manager.darwinModules.home-manager
         {
           home-manager = {
@@ -34,7 +34,7 @@
             useUserPackages = true;
             backupFileExtension = "backup";
             extraSpecialArgs = { inherit inputs username; };
-            users.${username} = import ./home;
+            users.${username} = import ./home.nix;
           };
         }
       ];

@@ -9,7 +9,7 @@ git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
 nix build .#darwinConfigurations.Patriks-MacBook-Pro.system --out-link result && sudo ./result/activate
 mise install
-bun install --cwd config/pi/extensions/onepassword-environment --frozen-lockfile
+bun install --cwd config/pi/onepassword-environment --frozen-lockfile
 ```
 
 This assumes Homebrew and Determinate Nix are already installed.
@@ -60,7 +60,7 @@ Home Manager links and configures:
 
 ## Pi Web Credentials
 
-Create a 1Password Environment containing `EXA_API_KEY`, `TAVILY_API_KEY`, and `FIRECRAWL_API_KEY`. Copy its Environment ID into `config/pi/extensions/onepassword-environment/config.json`.
+Create a 1Password Environment containing `EXA_API_KEY`, `TAVILY_API_KEY`, and `FIRECRAWL_API_KEY`. Copy its Environment ID into `config/pi/onepassword-environment/config.json`.
 
 On each new Mac, open 1Password, go to **Settings → Developer**, and enable **Integrate with other apps** under the SDK integration section. Pi loads the Environment on startup and `/reload`.
 
@@ -69,7 +69,7 @@ On each new Mac, open 1Password, go to **Settings → Developer**, and enable **
 - Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and other account-backed applications.
 - Enable the 1Password SSH agent so Git signing works.
 - Grant required macOS privacy permissions and authenticate the Apple Account.
-- Install the Cursor extensions documented in `home/default.nix`.
+- Install the Cursor extensions documented in `home.nix`.
 - Confirm the GitHub token exposed by an older Fish configuration remains revoked.
 
 ## Repository Layout
@@ -78,8 +78,8 @@ On each new Mac, open 1Password, go to **Settings → Developer**, and enable **
 ~/dotfiles/
 ├── flake.nix                 # Nix flake entry point
 ├── flake.lock
-├── darwin/default.nix        # nix-darwin system and Homebrew state
-├── home/default.nix          # Home Manager programs and dotfiles
-├── config/mise/config.toml   # Global mise-managed tools
+├── darwin.nix                # nix-darwin system and Homebrew state
+├── home.nix                  # Home Manager programs and dotfiles
+├── config/mise.toml          # Global mise-managed tools
 └── config/                   # Shell and application configuration
 ```
