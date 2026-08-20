@@ -75,6 +75,16 @@ in
         sudo "$HOME/dotfiles/result/activate"
       '';
     };
+    functions.update = {
+      description = "Update Nix, Homebrew, and mise-managed tools";
+      body = ''
+        cd "$HOME/dotfiles"; or return
+        nix flake update; or return
+        rebuild; or return
+        mise upgrade; or return
+        brew cleanup
+      '';
+    };
   };
 
   programs.starship = {

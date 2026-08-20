@@ -25,14 +25,10 @@ Rebuild from any Fish shell:
 rebuild
 ```
 
-Update Nix inputs or mise tools explicitly:
+Update Nix inputs, Homebrew packages and apps, and mise tools:
 
 ```bash
-cd ~/dotfiles
-nix flake update
-rebuild
-
-mise upgrade
+update
 ```
 
 ## Pi credentials
