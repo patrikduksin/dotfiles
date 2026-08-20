@@ -1,125 +1,83 @@
 # Patrik's Dotfiles
 
-Declarative macOS workstation setup powered by [mise bootstrap](https://mise.jdx.dev/bootstrap.html), native mise package management, and symlinked dotfiles.
+Declarative macOS workstation setup powered by nix-darwin and Home Manager. mise manages global language runtimes and developer tools within the Nix-managed system.
 
 ## Fresh Mac Setup
-
-### 1. Clone the repository
 
 ```bash
 git clone https://github.com/patrikduksin/dotfiles.git ~/dotfiles
 cd ~/dotfiles
-```
-
-### 2. Run the installer
-
-```bash
 ./install.sh
 ```
 
-The installer:
-
-1. Installs Homebrew when needed.
-2. Installs mise.
-3. Trusts this repository's `mise.toml`.
-4. Runs `mise bootstrap --yes`.
-
-Bootstrap converges the dotfiles, macOS preferences, keyboard LaunchAgent, login shell, global development tools, Homebrew packages, applications, fonts, and remaining idempotent setup.
+The installer installs Homebrew and Determinate Nix when needed, then builds and applies this flake's nix-darwin configuration.
 
 ## Everyday Commands
 
 ```bash
 # Reapply the desired machine state
-mise -C ~/dotfiles bootstrap
+sudo darwin-rebuild switch --flake ~/dotfiles
 
-# Preview declarative changes
-mise -C ~/dotfiles bootstrap --dry-run
-
-# Inspect declarative state
-mise -C ~/dotfiles bootstrap status
-
-# Upgrade native packages, the four Homebrew casks, and mise tools
-mise -C ~/dotfiles run update
+# Update flake inputs, then reapply
+cd ~/dotfiles
+nix flake update
+sudo darwin-rebuild switch --flake .
 ```
 
-The `rebuild` alias runs the first command.
+The `rebuild` shell alias runs the first command.
 
 ## What's Included
 
-### Homebrew
+### Packages and applications
 
-`Brewfile` owns only Entire, AeroSpace, and Microsoft Teams. These remain on Homebrew for compatibility.
-
-### mise packages and tools
-
-`mise.toml` natively installs the remaining Homebrew formulae, GUI applications, fonts, Infuse, Bun, Node.js, pnpm, Rust, uv, Prettier, Codex, Claude Code, OpenCode through Bun, eas-cli, agent-browser, pi-coding-agent, and related global tools.
+- nix-darwin manages Homebrew CLI tools, GUI applications, fonts, and Infuse.
+- Homebrew CLI tools include Docker with Colima, mise, Herdr, ncspot, media tools, and iOS development tools.
+- Applications include 1Password, AeroSpace, Raycast, Ghostty, Cursor, Helium, communication apps, Figma, ChatGPT, Korimako, and the configured utility and productivity apps.
+- mise manages Bun, Node.js, pnpm, Rust, uv, Prettier, Codex, Claude Code, OpenCode, eas-cli, agent-browser, and pi-coding-agent.
 
 ### Dotfiles
 
+Home Manager links and configures:
+
 - Fish and Zsh
-- Git with 1Password SSH signing
-- Starship
+- Git with 1Password SSH signing and GitHub CLI credentials
+- Starship, zoxide, fzf, and direnv
 - mise
-- Aerospace
-- Ghostty
-- Herdr
-- Pi coding agent settings, packages, and 1Password Environment credential loading
+- AeroSpace, Ghostty, and Herdr
+- Pi coding agent settings, packages, web-search configuration, and 1Password Environment credential loading
 
 ### macOS configuration
 
 - Dock, Finder, keyboard, trackpad, menu-bar clock, and dark mode defaults
 - Raycast on Command-Space with Spotlight shortcuts disabled
 - U.S. and RussianWin input sources
-- F4/F5/F6 hardware-key remapping through a mise-managed LaunchAgent
+- F4/F5/F6 hardware-key remapping
 - Touch ID for `sudo`
 - Docker Compose and buildx plugin discovery for the Homebrew Docker CLI
 
-## Manual Steps
-
-### Accounts and permissions
-
-Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and other account-backed applications. Enable the 1Password SSH agent so Git signing works. macOS privacy permissions and Apple Account authentication cannot be automated safely.
-
-### Pi web credentials
+## Pi Web Credentials
 
 Create a 1Password Environment containing `EXA_API_KEY`, `TAVILY_API_KEY`, and `FIRECRAWL_API_KEY`. Copy its Environment ID into `config/pi/extensions/onepassword-environment/config.json`.
 
 On each new Mac, open 1Password, go to **Settings → Developer**, and enable **Integrate with other apps** under the SDK integration section. Pi loads the Environment on startup and `/reload`.
 
-### Cursor extensions
+## Manual Steps
 
-Install these manually:
-
-```text
-biomejs.biome
-dbaeumer.vscode-eslint
-dooez.alt-catppuccin-vsc
-esbenp.prettier-vscode
-expo.vscode-expo-theme
-expo.vscode-expo-tools
-redhat.vscode-yaml
-rvest.vs-code-prettier-eslint
-vscodevim.vim
-yoavbls.pretty-ts-errors
-```
-
-### Security reminder
-
-An older Fish configuration contained an exposed GitHub token. Confirm it remains revoked at <https://github.com/settings/tokens>.
+- Sign in to 1Password, Raycast, communication apps, Spotify, Notion, Figma, and other account-backed applications.
+- Enable the 1Password SSH agent so Git signing works.
+- Grant required macOS privacy permissions and authenticate the Apple Account.
+- Install the Cursor extensions documented in `home/default.nix`.
+- Confirm the GitHub token exposed by an older Fish configuration remains revoked.
 
 ## Repository Layout
 
 ```text
 ~/dotfiles/
-├── mise.toml                  # Workstation state, tools, defaults, tasks
-├── Brewfile                   # Four Homebrew-only compatibility casks
-├── install.sh                 # New-machine entry point
-├── scripts/                   # Idempotent bootstrap helpers
-└── config/                    # Files symlinked into the home directory
+├── flake.nix                 # Nix flake entry point
+├── flake.lock
+├── darwin/default.nix        # nix-darwin system and Homebrew state
+├── home/default.nix          # Home Manager programs and dotfiles
+├── config/mise/config.toml   # Global mise-managed tools
+├── config/                   # Shell and application configuration
+└── install.sh                # New-machine entry point
 ```
-
-## Migrating an Existing Nix-managed Mac
-
-Running `./install.sh` repoints the Home Manager-owned dotfile symlinks to this repository and applies the mise configuration. It intentionally does not uninstall Nix or delete `/nix`; remove the old Nix installation separately only after verifying that `mise bootstrap status` and your daily tools work as expected.
-
-Existing Homebrew-owned casks cannot be adopted in place by mise. Transfer them with a normal Homebrew uninstall (without `--zap`) followed by `mise bootstrap packages apply`; application data and preferences remain in place.

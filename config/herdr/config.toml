@@ -33,3 +33,6 @@ position = "bottom-right"
 
 [worktrees]
 directory = "~/.herdr/worktrees"
+
+[ui]
+agent_panel_sort = "priority"

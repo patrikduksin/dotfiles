@@ -1,7 +1,7 @@
 #!/bin/bash
-set -euo pipefail
+set -e
 
-echo "==> Patrik's mise bootstrap installer"
+echo "==> Patrik's Dotfiles Installer"
 
 # Check if running on macOS
 if [[ "$(uname)" != "Darwin" ]]; then
@@ -22,17 +22,22 @@ else
     echo "==> Homebrew already installed"
 fi
 
-# Install mise if not present
-if ! command -v mise &> /dev/null; then
-    echo "==> Installing mise..."
-    brew install mise
+# Install Nix if not present
+if ! command -v nix &> /dev/null; then
+    echo "==> Installing Nix..."
+    curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install
+
+    # Source nix
+    if [[ -f "/nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh" ]]; then
+        . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+    fi
+else
+    echo "==> Nix already installed"
 fi
 
-repo_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$repo_dir"
-
-echo "==> Trusting and applying mise configuration..."
-mise trust "$repo_dir/mise.toml"
-mise bootstrap --yes
+# Build and apply nix-darwin configuration
+echo "==> Building and applying nix-darwin configuration..."
+cd "$(dirname "$0")"
+nix run nix-darwin -- switch --flake .
 
 echo "==> Done! You may need to restart your terminal."

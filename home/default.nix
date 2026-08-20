@@ -1,0 +1,149 @@
+{ config, pkgs, lib, inputs, username, ... }:
+
+let
+  homeDir = config.home.homeDirectory;
+in
+{
+  home = {
+    username = username;
+    homeDirectory = "/Users/${username}";
+    stateVersion = "24.05";
+  };
+
+  # Let Home Manager manage itself
+  programs.home-manager.enable = true;
+
+  # Avoid local Home Manager option-doc generation during system rebuilds.
+  manual.manpages.enable = false;
+
+  # XDG directories
+  xdg.enable = true;
+
+  # Symlink config files
+  xdg.configFile = {
+    "fish/config.fish".source = ../config/fish/config.fish;
+    "fish/conf.d/op_auto_env.fish".source = ../config/fish/conf.d/op_auto_env.fish;
+    "git/config".source = ../config/git/config;
+    "starship.toml".source = ../config/starship.toml;
+    "mise/config.toml".source = ../config/mise/config.toml;
+    "aerospace/aerospace.toml".source = ../config/aerospace/aerospace.toml;
+    "ghostty/config".source = ../config/ghostty/config;
+    "herdr/config.toml".source = ../config/herdr/config.toml;
+  };
+
+  home.file = {
+    ".zshenv".source = ../config/zsh/.zshenv;
+    ".zshrc".source = ../config/zsh/.zshrc;
+    ".pi/agent/settings.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/settings.json";
+    ".pi/web-search.json".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/web-search.json";
+    ".pi/agent/extensions/onepassword-environment".source = config.lib.file.mkOutOfStoreSymlink "${homeDir}/dotfiles/config/pi/extensions/onepassword-environment";
+  };
+
+  # Starship prompt
+  programs.starship = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  # Zoxide (smarter cd)
+  programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  # Direnv
+  programs.direnv = {
+    enable = true;
+    nix-direnv.enable = true;
+  };
+
+  # fzf
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = true;
+    enableZshIntegration = true;
+  };
+
+  # Make Homebrew's Docker CLI plugins discoverable by `docker`.
+  home.activation.dockerCliPlugins = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    DOCKER_CONFIG_DIR="$HOME/.docker"
+    DOCKER_PLUGIN_DIR="$DOCKER_CONFIG_DIR/cli-plugins"
+    BREW_BIN="/opt/homebrew/bin/brew"
+
+    if [ ! -x "$BREW_BIN" ]; then
+      BREW_BIN="$(command -v brew || true)"
+    fi
+
+    if [ -n "$BREW_BIN" ] && [ -x "$BREW_BIN" ]; then
+      mkdir -p "$DOCKER_PLUGIN_DIR"
+
+      for plugin in docker-compose docker-buildx; do
+        plugin_bin="$("$BREW_BIN" --prefix)/opt/$plugin/bin/$plugin"
+        if [ -x "$plugin_bin" ]; then
+          ln -sfn "$plugin_bin" "$DOCKER_PLUGIN_DIR/$plugin"
+        fi
+      done
+    fi
+  '';
+
+  # Keep mise tools on the newest available versions from global config.
+  home.activation.miseSyncLatest = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    MISE_BIN="/opt/homebrew/bin/mise"
+    if [ ! -x "$MISE_BIN" ]; then
+      MISE_BIN="$(command -v mise || true)"
+    fi
+
+    if [ -n "$MISE_BIN" ] && [ -x "$MISE_BIN" ]; then
+      "$MISE_BIN" trust "$HOME/.config/mise/config.toml" >/dev/null 2>&1 || true
+
+      cd "$HOME"
+      "$MISE_BIN" install --yes >/dev/null 2>&1 || true
+      "$MISE_BIN" upgrade --yes \
+        bun \
+        node \
+        npm:prettier \
+        npm:@openai/codex \
+        npm:@anthropic-ai/claude-code \
+        npm:eas-cli \
+        npm:agent-browser \
+        npm:@earendil-works/pi-coding-agent \
+        npm:opencode-ai \
+        pnpm \
+        rust \
+        uv >/dev/null 2>&1 || true
+
+      # Prevent node global npm installs from shadowing dedicated npm:* tools.
+      for node_npm in "$HOME"/.local/share/mise/installs/node/*/bin/npm; do
+        [ -x "$node_npm" ] || continue
+        "$node_npm" uninstall -g @openai/codex @anthropic-ai/claude-code eas-cli agent-browser @earendil-works/pi-coding-agent opencode-ai >/dev/null 2>&1 || true
+      done
+
+      "$MISE_BIN" reshim >/dev/null 2>&1 || true
+    fi
+  '';
+
+  # Install the dependencies for the Pi 1Password Environment extension.
+  home.activation.piExtensionDependencies = lib.hm.dag.entryAfter [ "miseSyncLatest" ] ''
+    BUN_BIN="$HOME/.local/share/mise/shims/bun"
+    if [ -x "$BUN_BIN" ]; then
+      "$BUN_BIN" install \
+        --cwd "$HOME/dotfiles/config/pi/extensions/onepassword-environment" \
+        --frozen-lockfile >/dev/null
+    fi
+  '';
+
+  # Cursor extensions (managed manually - just documenting here)
+  # Extensions to install via Cursor:
+  # - biomejs.biome
+  # - dbaeumer.vscode-eslint
+  # - dooez.alt-catppuccin-vsc
+  # - esbenp.prettier-vscode
+  # - expo.vscode-expo-theme
+  # - expo.vscode-expo-tools
+  # - redhat.vscode-yaml
+  # - rvest.vs-code-prettier-eslint
+  # - vscodevim.vim
+  # - yoavbls.pretty-ts-errors
+}
