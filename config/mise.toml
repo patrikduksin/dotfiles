@@ -11,6 +11,7 @@ node = "latest"
 pnpm = "latest"
 rust = "stable"
 uv = "latest"
+fnox = "latest"
 
 [settings]
 experimental = true
