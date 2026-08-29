@@ -23,7 +23,6 @@
     taps = [
       "nikitabobko/tap"
       "entireio/tap"
-      "gouegd/korimako"
     ];
 
     brews = [
@@ -42,6 +41,9 @@
       "docker-compose"
       "sox"
       "ffmpeg"
+      "yt-dlp"
+      "portaudio"
+      "pkgconf"
       "imagemagick"
       "cmake"
       "cocoapods"
@@ -50,7 +52,6 @@
       "mas"
       "gh"
       "herdr"
-      "ncspot"
     ];
 
     casks = [
@@ -85,11 +86,9 @@
       "wispr-flow"
 
       # Apps
-      "spotify"
       "notion"
       "notion-calendar"
       "chatgpt"
-      "gouegd/korimako/korimako"
 
       # Fonts
       "font-jetbrains-mono-nerd-font"
@@ -105,7 +104,7 @@
     if [ -x "/opt/homebrew/bin/brew" ]; then
       sudo --user=${username} --set-home \
         env PATH="/opt/homebrew/bin:$PATH" \
-        brew trust --tap nikitabobko/tap entireio/tap gouegd/korimako >/dev/null
+        brew trust --tap nikitabobko/tap entireio/tap >/dev/null
     fi
   '';
 

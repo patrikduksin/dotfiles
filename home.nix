@@ -14,6 +14,10 @@ in
       "/opt/homebrew/bin"
       "/opt/homebrew/sbin"
     ];
+    sessionVariables = {
+      # The stock macOS updater replaces the YouTube-enabled source build.
+      SPOTATUI_SKIP_UPDATE = "1";
+    };
   };
 
   manual.manpages.enable = false;
