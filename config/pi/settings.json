@@ -1,8 +1,8 @@
 {
   "lastChangelogVersion": "0.84.2",
   "theme": "catppuccin-mocha",
-  "defaultProvider": "openai-codex",
-  "defaultModel": "gpt-5.6-sol",
+  "defaultProvider": "openrouter",
+  "defaultModel": "stealth/ox-alpha",
   "npmCommand": [
     "bun"
   ],
@@ -10,5 +10,8 @@
     "npm:@firstpick/pi-themes-bundle",
     "npm:pi-subagents-lite",
     "npm:pi-web-access"
-  ]
+  ],
+  "compaction": {
+    "enabled": true
+  }
 }

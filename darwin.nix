@@ -66,28 +66,20 @@
       "helium-browser"
 
       # Communication
-      "slack@beta"
       "telegram"
       "whatsapp"
       "discord"
-      "microsoft-teams"
 
       # Development
-      "figma@beta"
       "mitmproxy"
-      "xcodes-app"
 
       # Utilities
-      "aldente"
       "hiddenbar"
       "macs-fan-control"
       "contexts"
-      "iina"
       "wispr-flow"
 
       # Apps
-      "notion"
-      "notion-calendar"
       "chatgpt"
 
       # Fonts
@@ -95,9 +87,7 @@
       "font-fira-code-nerd-font"
     ];
 
-    masApps = {
-      "Infuse" = 1136220934;
-    };
+    masApps = { };
   };
 
   system.activationScripts.homebrew.text = lib.mkBefore ''
@@ -184,6 +174,16 @@
         # Raycast global hotkey (Cmd+Space, keycode 49 = Space)
         "com.raycast.macos" = {
           raycastGlobalHotkey = "Command-49";
+        };
+        # Hidden Bar: keep the setup simple and avoid its fragile always-hidden mode.
+        "com.dwarvesv.minimalbar" = {
+          alwaysHiddenSectionEnabled = false;
+          areSeparatorsHidden = false;
+          isAutoHide = true;
+          isAutoStart = true;
+          isShowPreferences = false;
+          numberOfSecondForAutoHide = 10.0;
+          useFullStatusBarOnExpandEnabled = false;
         };
         # Input sources (keyboards)
         "com.apple.HIToolbox" = {
