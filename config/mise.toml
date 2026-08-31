@@ -1,6 +1,5 @@
 [tools]
 bun = { version = "latest", minimum_release_age = "0s" }
-node = "latest"
 "npm:prettier" = "latest"
 "npm:@openai/codex" = { version = "latest", minimum_release_age = "0s" }
 "npm:eas-cli" = "latest"
@@ -14,7 +13,6 @@ fnox = "latest"
 
 [settings]
 experimental = true
-idiomatic_version_file_enable_tools = ["node"]
 
 [settings.npm]
 bun = true

@@ -66,8 +66,6 @@
 
       # Communication
       "telegram"
-      "whatsapp"
-      "discord"
 
       # Development
       "mitmproxy"
@@ -75,7 +73,6 @@
       # Utilities
       "hiddenbar"
       "contexts"
-      "wispr-flow"
 
       # Apps
       "chatgpt"
