@@ -3,7 +3,6 @@ bun = { version = "latest", minimum_release_age = "0s" }
 node = "latest"
 "npm:prettier" = "latest"
 "npm:@openai/codex" = { version = "latest", minimum_release_age = "0s" }
-"npm:@anthropic-ai/claude-code" = "latest"
 "npm:eas-cli" = "latest"
 "npm:agent-browser" = "latest"
 "npm:@earendil-works/pi-coding-agent" = { version = "latest", bun_args = "--ignore-scripts", npm_args = "--ignore-scripts" }

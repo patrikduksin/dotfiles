@@ -59,7 +59,6 @@
       "entireio/tap/entire"
       "1password"
       "1password-cli"
-      "nikitabobko/tap/aerospace"
       "raycast"
       "ghostty"
       "cursor"
@@ -75,7 +74,6 @@
 
       # Utilities
       "hiddenbar"
-      "macs-fan-control"
       "contexts"
       "wispr-flow"
 

@@ -24,7 +24,6 @@ in
 
   xdg.configFile = {
     "mise/config.toml".source = ./config/mise.toml;
-    "aerospace/aerospace.toml".source = ./config/aerospace.toml;
     "ghostty/config".source = ./config/ghostty.conf;
     "herdr/config.toml".source = ./config/herdr.toml;
   };
