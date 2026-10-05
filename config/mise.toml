@@ -1,4 +1,5 @@
 [tools]
+node = "24.21.0"
 bun = { version = "latest", minimum_release_age = "0s" }
 "npm:prettier" = "latest"
 "npm:@openai/codex" = { version = "latest", minimum_release_age = "0s" }
